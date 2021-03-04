@@ -10,4 +10,39 @@
 
 <script>
   console.log(d3); // test if d3 is loaded
+
+  /* - - - - - - - - Data Generation - - - - - - - -
+  ** Everytime you need a dataset, set a variable = to the generateDataset() function.
+  ** This creates a struct with all the dataset information.
+  ** For example, you can do: let data1 = generateDataset();
+  ** In this case, get the dataset array using data1.dataset
+  ** To get the marked data points for comparison, use data1.dataset[mark1] and data1.dataset[mark2].
+  ** (mark1 and mark2 are just the index in the array of the chosen points.)
+  */
+  function generateDataset() {
+    //choose size of data set between 5-10
+    let datasetCount = Math.floor(Math.random() * 6) + 5; 
+
+    //choose two random data points
+    let chosenPoint1 = Math.floor(Math.random() * datasetCount);
+    let chosenPoint2 = Math.floor(Math.random() * datasetCount);
+    while (chosenPoint1 == chosenPoint2) { //make sure we did not choose same one twice
+      chosenPoint2 = Math.floor(Math.random() * datasetCount);
+    }
+    
+    //create dataset
+    let myDataset = Array.from({length: datasetCount}, () => Math.floor(Math.random() * 101));
+
+    //create struct
+    var data = {
+      mark1: chosenPoint1,
+      mark2: chosenPoint2,
+      dataset: myDataset
+    };
+
+    return data;
+  }
+
+  //let data1 = generateDataset();
+  //console.log("mark1: " + data1.mark1 + " mark2: " + data1.mark2 + " dataset: " + data1.dataset);
 </script>
