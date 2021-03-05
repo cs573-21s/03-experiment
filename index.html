@@ -16,7 +16,7 @@
   ** This creates a struct with all the dataset information.
   ** For example, you can do: let data1 = generateDataset();
   ** In this case, get the dataset array using data1.dataset
-  ** To get the marked data points for comparison, use data1.dataset[mark1] and data1.dataset[mark2].
+  ** To get the indices for comparison, use data1.mark1 and data1.mark2
   ** (mark1 and mark2 are just the index in the array of the chosen points.)
   */
   function generateDataset() {
@@ -33,11 +33,26 @@
     //create dataset
     let myDataset = Array.from({length: datasetCount}, () => Math.floor(Math.random() * 101));
 
+    var letterData = [
+        {letter: "A", frequency: myDataset[0]},
+        {letter: "B", frequency: myDataset[1]},
+        {letter: "C", frequency: myDataset[2]},
+        {letter: "D", frequency: myDataset[3]},
+        {letter: "E", frequency: myDataset[4]},
+        {letter: "F", frequency: myDataset[5]},
+        {letter: "G", frequency: myDataset[6]},
+        {letter: "H", frequency: myDataset[7]},
+        {letter: "I", frequency: myDataset[8]},
+        {letter: "J", frequency: myDataset[9]}
+    ];
+
+    letterData.length = datasetCount; //Reduce array to correct size
+
     //create struct
     var data = {
       mark1: chosenPoint1,
       mark2: chosenPoint2,
-      dataset: myDataset
+      dataset: letterData
     };
 
     return data;

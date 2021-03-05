@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>CS573 a1</title>
+  <title>CS573 a3</title>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
   <style>
@@ -25,24 +25,6 @@
       position: absolute;
       top: 0;
       left: 0;
-    }
-
-    div.tooltip-point {
-        position: absolute;
-        text-align: left;
-        padding: .5rem;
-        background: #FFFFFF;
-        color: #000000;
-        border: 1px solid #000000;
-        border-radius: 8px;
-        pointer-events: none;
-        font-family: sans-serif;
-        font-size: 1rem;
-    }
-
-    text {
-        font-family: sans-serif;
-        font-weight: bold;
     }
 
   </style>
@@ -73,23 +55,38 @@
             let chosenPoint1 = Math.floor(Math.random() * datasetCount);
             let chosenPoint2 = Math.floor(Math.random() * datasetCount);
             while (chosenPoint1 == chosenPoint2) { //make sure we did not choose same one twice
-                chosenPoint2 = Math.floor(Math.random() * datasetCount);
+            chosenPoint2 = Math.floor(Math.random() * datasetCount);
             }
-        
+            
             //create dataset
             let myDataset = Array.from({length: datasetCount}, () => Math.floor(Math.random() * 101));
 
+            var letterData = [
+                {letter: "A", frequency: myDataset[0]},
+                {letter: "B", frequency: myDataset[1]},
+                {letter: "C", frequency: myDataset[2]},
+                {letter: "D", frequency: myDataset[3]},
+                {letter: "E", frequency: myDataset[4]},
+                {letter: "F", frequency: myDataset[5]},
+                {letter: "G", frequency: myDataset[6]},
+                {letter: "H", frequency: myDataset[7]},
+                {letter: "I", frequency: myDataset[8]},
+                {letter: "J", frequency: myDataset[9]}
+            ];
+
+            letterData.length = datasetCount; //Reduce array to correct size
+
             //create struct
             var data = {
-                mark1: chosenPoint1,
-                mark2: chosenPoint2,
-                dataset: myDataset
+            mark1: chosenPoint1,
+            mark2: chosenPoint2,
+            dataset: letterData
             };
 
             return data;
-        }     
+        }   
 
-        function generateCircularBarplot(data) {
+        function generateCircularBarplot(data, mark1, mark2) {
 
             console.log(data)
 
@@ -108,7 +105,7 @@
             .data(data)
             .enter()
             .append("path")
-                .attr("fill", "#69b3a2")
+                .attr("fill", "black")
                 .attr("d", d3.arc()     // imagine your doing a part of a donut plot
                     .innerRadius(innerRadius)
                     .outerRadius(function(d) { 
@@ -135,39 +132,10 @@
                 .attr("alignment-baseline", "middle")
         }
 
-        let data1 = generateDataset();
-        console.log("mark1: " + data1.mark1 + " mark2: " + data1.mark2 + " dataset: " + data1.dataset);
-
-        var data = [
-            {letter: "A", frequency: 5},
-            {letter: "B", frequency: 4},
-            {letter: "C", frequency: 4},
-            {letter: "D", frequency: 3},
-            {letter: "E", frequency: 6},
-            {letter: "F", frequency: 8},
-            {letter: "G", frequency: 9},
-            {letter: "H", frequency: 10},
-            {letter: "I", frequency: 6},
-            {letter: "J", frequency: 8},
-            {letter: "K", frequency: 3},
-            {letter: "L", frequency: 5},
-            {letter: "M", frequency: 6},
-            {letter: "N", frequency: 7},
-            {letter: "O", frequency: 3},
-            {letter: "P", frequency: 2},
-            {letter: "Q", frequency: 5},
-            {letter: "R", frequency: 4},
-            {letter: "S", frequency: 6},
-            {letter: "T", frequency: 8},
-            {letter: "U", frequency: 9},
-            {letter: "V", frequency: 11},
-            {letter: "W", frequency: 23},
-            {letter: "X", frequency: 23},
-            {letter: "Y", frequency: 34},
-            {letter: "Z", frequency: 13}
-        ];
-
-        generateCircularBarplot(data);
+        // Produce graph
+        let data = generateDataset();
+        console.log("mark1: " + data.mark1 + " mark2: " + data.mark2 + " dataset: " + data.dataset);
+        generateCircularBarplot(data.dataset, data.mark1, data.mark2);
 
     </script>
 </body>
