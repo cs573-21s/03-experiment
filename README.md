@@ -24,3 +24,9 @@ Achievements
 ## Technical
 
 ## Design
+
+References
+===
+
+## Circular Barplot
+https://www.d3-graph-gallery.com/graph/circular_barplot_label.html
