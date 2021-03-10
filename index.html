@@ -2,10 +2,44 @@
 
 
 <style>
+  #end-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .button {
+    color: white;
+    background-color: green;
+    border: none;
+    width: 8.5rem;
+    height: 2rem;
+  }
+
+  .button:hover {
+    cursor: pointer;
+    background-color: forestgreen;
+  }
+
+  #restart-button {
+    margin-top: 1rem;
+  }
+
+  body {
+    margin: 0;
+  }
 </style>
 
 <body>
-  <h1> Experiment </h1>
+  
+  <div id="end-screen">
+    <p>You have successfully completed the experiment, and we have recorded your results.</p>
+    <button class="button" id="restart-button">Restart Experiment</button>
+  </div>
+
 </body>
 
 <script>
@@ -60,4 +94,45 @@
 
   //let data1 = generateDataset();
   //console.log("mark1: " + data1.mark1 + " mark2: " + data1.mark2 + " dataset: " + data1.dataset);
+</script>
+
+<script>
+
+  function generateVisOrder() {
+    // 60 visualizations
+    // 20 per visualization type
+    let order = []
+    let radarCount = 0;
+    let bargraphCount = 0;
+    let circularbarplotCount = 0;
+    
+    while (order.length < 60) {
+      let randomNum = Math.floor(Math.random()*3)
+
+      if (randomNum == 0) {
+        if (radarCount >= 20)
+          continue;
+        else
+          radarCount++
+      } else if (randomNum == 1) {
+        if (bargraphCount >=20)
+          continue;
+        else 
+          bargraphCount++
+      } else {
+        if (circularbarplotCount >= 20)
+          continue;
+        else
+          circularbarplotCount++
+      }
+      order.push(randomNum)
+    }
+
+    return order;
+  }
+
+  // let orderArray = generateVisOrder()
+
+  
+  
 </script>
