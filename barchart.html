@@ -1,0 +1,143 @@
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+<style>
+</style>
+
+<body>
+  <h1> Experiment </h1>
+  <svg id="vis"></svg>
+</body>
+
+<script>
+  console.log(d3); // test if d3 is loaded
+
+  /* - - - - - - - - Data Generation - - - - - - - -
+  ** Everytime you need a dataset, set a variable = to the generateDataset() function.
+  ** This creates a struct with all the dataset information.
+  ** For example, you can do: let data1 = generateDataset();
+  ** In this case, get the dataset array using data1.dataset
+  ** To get the indices for comparison, use data1.mark1 and data1.mark2
+  ** (mark1 and mark2 are just the index in the array of the chosen points.)
+  */
+  function generateDataset() {
+    //choose size of data set between 5-10
+    let datasetCount = Math.floor(Math.random() * 6) + 5; 
+
+    //choose two random data points
+    let chosenPoint1 = Math.floor(Math.random() * datasetCount);
+    let chosenPoint2 = Math.floor(Math.random() * datasetCount);
+    while (chosenPoint1 == chosenPoint2) { //make sure we did not choose same one twice
+      chosenPoint2 = Math.floor(Math.random() * datasetCount);
+    }
+    
+    //create dataset
+    let myDataset = Array.from({length: datasetCount}, () => Math.floor(Math.random() * 101));
+
+    var letterData = [
+        {letter: "A", frequency: myDataset[0]},
+        {letter: "B", frequency: myDataset[1]},
+        {letter: "C", frequency: myDataset[2]},
+        {letter: "D", frequency: myDataset[3]},
+        {letter: "E", frequency: myDataset[4]},
+        {letter: "F", frequency: myDataset[5]},
+        {letter: "G", frequency: myDataset[6]},
+        {letter: "H", frequency: myDataset[7]},
+        {letter: "I", frequency: myDataset[8]},
+        {letter: "J", frequency: myDataset[9]}
+    ];
+
+    letterData.length = datasetCount; //Reduce array to correct size
+
+    //create struct
+    var data = {
+      mark1: chosenPoint1,
+      mark2: chosenPoint2,
+      dataset: letterData
+    };
+
+    return data;
+  }
+
+  //let data1 = generateDataset();
+  //console.log("mark1: " + data1.mark1 + " mark2: " + data1.mark2 + " dataset: " + data1.dataset);
+
+
+  // establishing variables
+  var margin = 50,           
+  width = 500 - 2 * margin,
+  height = 500 - 2 * margin;
+
+  // creating svg
+  var svg = d3.select("#vis")             
+    .attr("width", width + 2 * margin)
+    .attr("height", height + 2 * margin)
+    .attr("transform", "translate(" + margin + ", " + margin + ")")
+
+  // creating dataset
+  var dataset = generateDataset();
+  buildBarChart(dataset);
+
+  /*-----------------------Bar Chart--------------------------
+  ** When you need to create a bar chart with a given data set, use 
+  ** buildBarChart(d) where d is the data returned from generateDataset()
+  */
+  function buildBarChart(data){
+    var d = data.dataset,
+    mark1 = data.mark1,
+    mark2 = data.mark2;
+    //console.log(d);
+
+    // scaling
+    var xscale = d3.scaleBand()
+      .domain(d.map(function(d){ return (d.letter) }))
+      .range( [0, width])
+      .padding(0.4);
+
+    var yscale = d3.scaleLinear()
+      .domain( d3.extent(d, function(d){ return d.frequency; }))
+      .range( [height, 0] );
+
+    // Add X axis
+    var x_axis = d3.axisBottom()
+    .scale(xscale)
+    svg.append("g")
+      .attr("transform", "translate(" + margin + "," + height + ")")
+      .call(x_axis)
+      .attr("class", "xAxis")
+      
+    // Add Y axis
+    var y_axis = d3.axisLeft()
+      .scale(yscale)
+    svg.append("g")
+      .attr("transform", "translate(" + margin + ", 0 )")
+      .call(y_axis)
+      .attr("class", "yAxis")
+
+    // Add X axis label
+    svg.append("text")             
+      .attr("text-anchor", "middle")
+      .attr("x", width/2 + margin)
+      .attr("y", height + 40)
+      .text("Letter");
+
+    // Add Y axis label
+    svg.append("text")
+      .attr("text-anchor", "middle")
+      .attr("x", -(height/2))
+      .attr("y", 0)
+      .attr("dy", ".75em")
+      .attr("transform", "rotate(-90)")
+      .text("Frequency");  
+
+    // Add Bars
+    var bars = svg.selectAll(".bar")
+      .data(d)
+      .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d){ return xscale(d.letter)+margin })
+      .attr("y", function(d){ return height - yscale(d.frequency) })
+      .attr("height", function(d){ return yscale(d.frequency)})
+      .attr("width", function(d){ return xscale.bandwidth() })
+  }
+</script>
