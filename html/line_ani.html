@@ -63,7 +63,7 @@ d3.json("test_data.json", function(data) {
   update(data);
 });
 
-function buildVis(data1) {
+function buildVis(data) {
 
   console.log(data2);
 
@@ -86,7 +86,7 @@ function buildVis(data1) {
 
 // Append the path, bind the data, and call the line generator 
   svg.append("path")
-    .datum(data1) // Binds data to the line 
+    .datum(data) // Binds data to the line 
     .attr("class", "line") // Assign a class for styling 
     .attr("d", line); // Calls the line generator 
 
@@ -94,7 +94,7 @@ function buildVis(data1) {
 
 //  Appends a circle for each datapoint 
   svg.selectAll(".dot")
-      .data(data1)
+      .data(data)
     .enter().append("circle") // Uses the enter().append() method
       .attr("class", "dot") // Assign a class for styling
       .attr("cx", function(d, i) { return xScale(i+0.5) })
@@ -102,7 +102,7 @@ function buildVis(data1) {
     .attr("r", 4);
 
   svg.selectAll(".text")
-      .data(data1)
+      .data(data)
       .enter().append("text") // Uses the enter().append() method
       .attr("fill", "black") // Assign a class for styling
       .attr('class', 'text')
@@ -132,7 +132,7 @@ var u = svg.selectAll(".line")
       .y(function(d) { return yScale(d.value); }))
 
 var d = svg.selectAll(".dot")
-    .data(data2)
+    .data(data)
 
    d
     .enter()
@@ -146,7 +146,7 @@ var d = svg.selectAll(".dot")
 
 
 var t = svg.selectAll(".text")
-    .data(data2)
+    .data(data)
 
    t
     .enter()
