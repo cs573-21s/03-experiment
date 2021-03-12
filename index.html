@@ -88,8 +88,10 @@
 
 <body>
   
-  <div class="trial" id="circularbarplot">
-    <div id="container" class="svg-container"></div>
+  <div class="trial" >
+    <div id="circularbarplot" class="svg-container"></div>
+    <svg id="bargraph"></svg>
+    <div id="radar" class="svg-container"></div>
     <div class="question">
       <p>Question</p>
       <label for="guess">Percentage Larger Estimate</label><br>
@@ -206,7 +208,7 @@
       innerRadius = 40,
       outerRadius = Math.min(width, height) / 2;
 
-  var svg = d3.select('div#container').append('svg')
+  var svg = d3.select('div#circularbarplot').append('svg')
       .attr('viewBox', '0 0 390 1080')
       .attr('preserveAspectRatio', 'xMinYMin meet')
       .classed('svg-content', true)
@@ -260,4 +262,113 @@
   let data = generateDataset();
   console.log("mark1: " + data.mark1 + " mark2: " + data.mark2 + " dataset: " + data.dataset);
   generateCircularBarplot(data.dataset, data.mark1, data.mark2);
+</script>
+
+<script>
+  // establishing variables
+  var margin = 50,           
+  width = 500 - 2 * margin,
+  height = 500 - 2 * margin;
+
+  // creating svg
+  var svg = d3.select("#bargraph")             
+    .attr("width", width + 2 * margin)
+    .attr("height", height + 2 * margin)
+    .attr("transform", "translate(" + margin + ", " + margin + ")")
+
+  /*-----------------------Bar Chart--------------------------
+  ** When you need to create a bar chart with a given data set, use 
+  ** buildBarChart(d) where d is the data returned from generateDataset()
+  */
+  function buildBarChart(data){
+    var d = data.dataset,
+    mark1 = data.mark1,
+    mark2 = data.mark2;
+    //console.log(d);
+
+    // scaling
+    var xscale = d3.scaleBand()
+      .domain(d.map(function(d){ return (d.letter) }))
+      .range( [0, width])
+      .padding(0.4);
+
+    var yscale = d3.scaleLinear()
+      .domain( d3.extent(d, function(d){ return d.frequency; }))
+      .range( [height, 0] );
+
+    // Add X axis
+    var x_axis = d3.axisBottom()
+    .scale(xscale)
+    svg.append("g")
+      .attr("transform", "translate(" + margin + "," + height + ")")
+      .call(x_axis)
+      .attr("class", "xAxis")
+      
+    // Add Y axis
+    var y_axis = d3.axisLeft()
+      .scale(yscale)
+    svg.append("g")
+      .attr("transform", "translate(" + margin + ", 0 )")
+      .call(y_axis)
+      .attr("class", "yAxis")
+
+    // Add X axis label
+    svg.append("text")             
+      .attr("text-anchor", "middle")
+      .attr("x", width/2 + margin)
+      .attr("y", height + 40)
+      .text("Letter");
+
+    // Add Y axis label
+    svg.append("text")
+      .attr("text-anchor", "middle")
+      .attr("x", -(height/2))
+      .attr("y", 0)
+      .attr("dy", ".75em")
+      .attr("transform", "rotate(-90)")
+      .text("Frequency");  
+
+    // Add Bars
+    var bars = svg.selectAll(".bar")
+      .data(d)
+      .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d){ return xscale(d.letter)+margin })
+      .attr("y", function(d){ return height - yscale(d.frequency) })
+      .attr("height", function(d){ return yscale(d.frequency)})
+      .attr("width", function(d){ return xscale.bandwidth() })
+  }
+</script>
+
+<script>
+  
+  var visOrder = []
+  var trialCount = 0 // will iterate after each press of the submission button except the first
+
+  // press button to start program  
+  function start() {
+    visOrder = generateVisOrder()
+    generateNextTrial(trialCount)
+  }
+
+  function generateNextTrial(trialNum) {
+    let visType = visOrder[trialNum]
+    // randomly generate data
+    if (visType == 0) { // radar
+      // load in radar 
+    } else if (visType == 1) { // bargraph
+      // load in bargraph
+    } else { // circular barplot
+      // load in circular barplot
+    }
+    // load question based on randomly generated data
+  }
+
+  function submitAnswer(answer) {
+    // checks for valid answer
+    // send answer to storage
+    // generate next trial
+  }
+    
+
 </script>
