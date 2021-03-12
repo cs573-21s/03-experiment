@@ -18,6 +18,17 @@ const width = 400;
 const height = 400;
 const margin = 50;
 
+var input =  [
+  { "value": 48, "compare": true },
+  { "value": 17, "compare": false },
+  { "value": 69, "compare": false },
+  { "value": 13, "compare": false },
+  { "value": 25, "compare": true },
+  { "value": 7, "compare": false }
+];
+
+console.log(input);
+
 var svg = d3.select("#pie")
   .append('svg')
     .attr('width', width)
@@ -38,13 +49,9 @@ var path = d3.arc()
 var label = d3.arc()
   .outerRadius(radius)
   .innerRadius(radius - 80);
-
-d3.json("test_data.json", function(error, data) {
-  if (error) {
-    throw error;
-    }
-  var arc = g.selectAll(".arc")
-    .data(pie(data))
+ 
+ var arc = g.selectAll(".arc")
+    .data(pie(input))
     .enter().append("g")
     .attr("class", "arc");
 
@@ -61,7 +68,7 @@ d3.json("test_data.json", function(error, data) {
        return "translate(" + label.centroid(d) + ")"; 
       })
     .text(function(d) { if (d.data.compare == true) { return "*"; }; });
-       });
+      
 
             
 </script>

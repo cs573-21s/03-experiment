@@ -34,10 +34,6 @@ const margin = {top: 50, right: 50, bottom: 50, left: 50};
 const width = 450 - margin.left - margin.right;
 const height = 400 - margin.top - margin.bottom;
 
-var paddingForText = 15;
-
-var n = 5;
-
 var data2;
 
 var svg = d3.select("#line")
@@ -48,8 +44,7 @@ var svg = d3.select("#line")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var xScale = d3.scaleLinear()
-    .domain([0, n+0.1]) // input
-    .range([0, width]); // output
+  .range([0, width]); // output
 
 var yScale = d3.scaleLinear()
     .domain([0, 100]) // input 
@@ -64,7 +59,11 @@ d3.json("test_data.json", function(data) {
 function buildVis(data) {
 
   console.log(data2);
+  
+  var n = Object.keys(data2).length;
+  console.log(n);
 
+  xScale.domain([0, n+0.1]);
 
   // d3's line generator
   var line = d3.line()
@@ -87,8 +86,6 @@ function buildVis(data) {
     .datum(data) // Binds data to the line 
     .attr("class", "line") // Assign a class for styling 
     .attr("d", line); // Calls the line generator 
-
-
 
 //  Appends a circle for each datapoint 
   svg.selectAll(".dot")

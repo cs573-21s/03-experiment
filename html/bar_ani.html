@@ -26,10 +26,6 @@ const margin = {top: 50, right: 50, bottom: 50, left: 50};
 const width = 450 - margin.left - margin.right;
 const height = 400 - margin.top - margin.bottom;
 
-var paddingForText = 15;
-
-var data2;
-
 var svg = d3.select("#bar")
   .append('svg')
     .attr('width', width + + margin.left + margin.right)
@@ -66,8 +62,6 @@ function buildVis(data) {
       .ticks(0)
       .tickValues([]));
 
-//      .tickFormat(d3.format('')));
-
   svg.append("g")
     .attr("class", "y axis")
     .call(d3.axisLeft(yScale).ticks(1));
@@ -99,26 +93,28 @@ function update(data) {
 var u = svg.selectAll(".bar")
     .data(data);
 
+var t = d3.transition()
+  .duration(3000)
+  .delay(1000);
+
   u
     .enter()
     .append("rect")
     .attr("class","bar")
     .merge(u)
-    .transition()
-    .duration(3000)
+    .transition(t)
     .attr("y", function(d) { return yScale(d.value); })
     .attr("height", function(d) { return height - yScale(d.value); })
 
-var t = svg.selectAll(".text")
+var txt = svg.selectAll(".text")
     .data(data)
 
-   t
+   txt
     .enter()
     .append("text")
     .attr('class', 'text')
-    .merge(t)
-    .transition()
-    .duration(3000)
+    .merge(txt)
+    .transition(t)
      .attr("y", function(d) { return yScale(d.value) - 5; })
      .attr("x", function(d) { return (xScale(d.value) + xScale.bandwidth()/2.35); })
     .text(function(d)
