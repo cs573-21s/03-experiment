@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CS573 A3 Experiment</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" /><link rel='stylesheet' href='//fonts.googleapis.com/css?family=Raleway' type='text/css' />
+    <style>
+    html, body{
+        background-image: linear-gradient(#c7edff, #b1f8e3);
+        height:100%;
+    }
+    .div{
+        flex-direction: column;
+        margin: 0 auto;
+        background-color: white;
+        width: 550px;
+        padding: 10px;
+        text-align: center;
+        margin-top: 10px;
+    }
+    .header{
+        margin-top: 30px;
+        font-family: "Raleway";
+    }
+    h1{
+        color:black;
+        font-weight: 100;
+        letter-spacing: 5px;
+        text-shadow: 4px 4px #00000010;
+        font-size: 56px;
+        margin: 0.1em;
+    }
+    h2{
+        color:#414141;
+        text-shadow: 2px 2px #00000010;
+        font-size: 14px;
+    }
+    p, form{
+        margin: 20px 40px;
+        font-family: "Open Sans";
+        font-size: 16px;
+        line-height: 140%;
+    }
+    option{
+        font-family: "Open Sans";
+        font-size: 12px
+    }
+    .button{
+        margin: 0.75em;
+        width: 8.5rem;
+        height: 3rem;
+        font-family: "Raleway";
+        font-size: 24px;
+        color: white;
+        background-color:#52b2b9;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 4px 4px #00000007;
+    }
+    .button:focus { outline:0; }
+    .button:hover { background-color: #39a3aa;}
+    .button:active{ transform: translateY(2px); }
+    #restart-button{ 
+        width:9rem;
+        height:4rem;
+    }
+
+    </style>
+</head>
+<body>
+    <div id="welcome-screen">
+        <div class="div header">
+            <h2>CS573 Data Visualization</h2>
+            <h1>Welcome</h1>
+        </div>
+        <div class="div" id="instructions">
+            <p>Thank you so much for participating in our study!</p>
+            <p> This is a group assignment for CS573 Data Visualization, 
+                and is being conducted by Jasmine Duerk, Evelyn Tran, 
+                Samantha Woodland, and Joseph Yuen.</p>
+            <p>You will be shown a series of data visualizations. For each one, approximate what percentage 
+                is the smaller of the larger. Make a quick judgement and move to the next question. For the best
+                experience, please use a laptop or computer instead of of a mobile device.</p> 
+            <p>The test will take approximately 10 minutes. When you are ready, please click the start button.</p>
+            <button class="button" id="start" onclick="return show('welcome-screen', 'bkgd-info')">Start</button>
+        </div> 
+    </div> 
+
+    <div id="bkgd-info" style="display:none">
+        <div class="div header">
+            <h2>CS573 Data Visualization</h2>
+            <h1>Background Information</h1>
+        </div>
+        <div class="div" id="form">
+            <form>
+                <p>Gender</p>
+                <select id="gender">
+                    <option value="blank"> </option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="other">Other</option>
+                    <option value="prefer not to say">Prefer Not to Say</option>
+                </select>
+                <p>Age</p>
+                <input id='age'> 
+            </form>
+            <button class="button" onclick="return show('bkgd-info','testing')">Next</button>
+        </div>
+    </div>
+
+    <div id="testing" style="display:none">
+        <div class="div header">
+            <h2>CS573 Data Visualization</h2>
+        </div>
+        <div class="div" id="experiment">
+            <svg></svg>
+            <p>What percent of the larger data point is the smaller data point?<br>
+                ex: If B makes up 50% of A, input 0.5 as your response.</p>
+            <form>
+                
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
+
+<script>
+    var gender = document.getElementById("gender").value,
+        age = document.getElementById("age").value;
+
+    console.log(gender);
+    console.log(age);
+
+    function show(current, next){
+        document.getElementById(next).style.display='block';
+        document.getElementById(current).style.display='none';
+        return false;
+    }
+</script>
