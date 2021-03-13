@@ -364,10 +364,11 @@
     // load question based on randomly generated data
   }
 
-  function submitAnswer(answer) {
+  async function submitAnswer(answer) {
     // checks for valid answer
     // send answer to storage
-    // generate next trial
+    trialCount = trialCount++
+    generateNextTrial(trialCount)
   }
     
 
