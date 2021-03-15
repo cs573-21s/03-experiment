@@ -136,6 +136,7 @@
         </div>
         <div class="div" id="instructions">
             <p>You have successfully completed the experiment, and we have recorded your results.</p>
+            <p>Please download your results and email it to jlduerk@wpi.edu</p>
         </div>
         <button class="button" id="get-results" onclick="getResults()">Get Results</button>
     </div>
@@ -552,6 +553,9 @@
         'age': document.getElementById("age").value
       }
       results.push(tempResult)
+
+      // clear input field
+      document.getElementById('guess').value = ""
       console.log("sending answer to storage")
 
       trialCount = trialCount + 1
