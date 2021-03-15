@@ -8,13 +8,6 @@ Authors
 - Samantha Woodland
 - Joseph Yuen
 
-HW
----
-- Jasmine - Data Generation
-- Samantha - Radar Chart
-- Evelyn - Bar Chart
-- Joe - Circular Barplot
-
 Experiment
 ===
 Data is cool
@@ -22,8 +15,15 @@ Data is cool
 Achievements
 ===
 ## Technical
+### Protected Fields with Error Messages
+### Button Animation
+### Analyzed gender and age distribution
+### Analysis visualization animation - ?
 
-## Design
+## Design Achievements
+### Colorful buttons
+### Modern font
+### Centered Layout
 
 References
 ===
