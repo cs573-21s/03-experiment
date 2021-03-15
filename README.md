@@ -17,6 +17,11 @@ Achievements
 ## Technical
 ### Protected Fields with Error Messages
 ### Button Animation
+
+![Button Animation](img/buttonAnimation.gif)
+
+When hovering over the button, it changes to a darker color to indicate what the mouse is selecting. When clicked, the button slightly moves down, as if user was pushing the button.
+
 ### Analyzed gender and age distribution
 ### Analysis visualization animation - ?
 
