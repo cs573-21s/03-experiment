@@ -100,9 +100,9 @@
             <h1>Background Information</h1>
         </div>
         <div class="div" id="form">
-            <form>
+            <form name="bkgd-form">
                 <p>Gender</p>
-                <select id="gender">
+                <select id="gender" name = "gender">
                     <option value="blank"> </option>
                     <option value="female">Female</option>
                     <option value="male">Male</option>
@@ -110,9 +110,9 @@
                     <option value="prefer not to say">Prefer Not to Say</option>
                 </select>
                 <p>Age</p>
-                <input id='age'> 
+                <input id='age' name= "age"> 
             </form>
-            <button class="button" onclick="return show('bkgd-info','testing')">Next</button>
+            <button class="button" onclick="return checkForm()">Next</button>
         </div>
     </div>
 
@@ -137,14 +137,15 @@
         <div class="div" id="instructions">
             <p>You have successfully completed the experiment, and we have recorded your results.</p>
             <p>Please download your results and email it to jlduerk@wpi.edu</p>
-        </div>
-        <button class="button" id="get-results" onclick="getResults()">Get Results</button>
+            <button class="button" id="get-results" onclick="getResults()">Get Results</button>
+        </div>   
     </div>
     
 </body>
 </html>
 
 <script>
+    // Switches between the different pages
     function show(current, next){
         document.getElementById(next).style.display='block';
         document.getElementById(current).style.display='none';
@@ -152,6 +153,21 @@
             start()
         }
         return false;
+    }
+
+    // Checks forms 
+    function checkForm(){
+      //console.log("checking form");
+      var form = document.forms["bkgd-form"];
+      var gender = form["gender"].value;
+      var age = form["age"].value;
+      console.log(!isNaN(age))
+      if ( gender == "blank" || isNaN(age) ){ 
+        alert("Please check your answers and fill out form.");
+        return false;
+      }
+      show('bkgd-info','testing')
+
     }
 </script>
 
@@ -335,58 +351,61 @@
       mark2 = data.mark2;
       //console.log(d);
   
-      // scaling
-      var xscale = d3.scaleBand()
-        .domain(d.map(function(d){ return (d.letter) }))
-        .range( [0, width])
-        .padding(0.4);
-  
-      var yscale = d3.scaleLinear()
-        .domain( d3.extent(d, function(d){ return d.frequency; }))
-        .range( [height, 0] );
-  
-      // Add X axis
-      var x_axis = d3.axisBottom()
-      .scale(xscale)
-      svg.append("g")
-        .attr("transform", "translate(" + margin + "," + height + ")")
-        .call(x_axis)
-        .attr("class", "xAxis")
-        
-      // Add Y axis
-      var y_axis = d3.axisLeft()
-        .scale(yscale)
-      svg.append("g")
-        .attr("transform", "translate(" + margin + ", 0 )")
-        .call(y_axis)
-        .attr("class", "yAxis")
-  
-      // Add X axis label
-      svg.append("text")             
-        .attr("text-anchor", "middle")
-        .attr("x", width/2 + margin)
-        .attr("y", height + 40)
-        .text("Letter");
-  
-      // Add Y axis label
-      svg.append("text")
-        .attr("text-anchor", "middle")
-        .attr("x", -(height/2))
-        .attr("y", 0)
-        .attr("dy", ".75em")
-        .attr("transform", "rotate(-90)")
-        .text("Frequency");  
-  
-      // Add Bars
-      var bars = svg.selectAll(".bar")
-        .data(d)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d){ return xscale(d.letter)+margin })
-        .attr("y", function(d){ return height - yscale(d.frequency) })
-        .attr("height", function(d){ return yscale(d.frequency)})
-        .attr("width", function(d){ return xscale.bandwidth() })
-    }
+       // scaling
+    var xscale = d3.scaleBand()
+      .domain(d.map(function(d){ return (d.letter) }))
+      .range( [0, width])
+      .padding(0.4);
+
+    var yscale = d3.scaleLinear()
+      .domain([0, 105])    //d3.max(d, function(d){return d.frequency;}
+      .range( [height, 0] );
+    console.log(d3.max(d, d.frequency));
+
+    // Add X axis
+    var x_axis = d3.axisBottom()
+    .scale(xscale)
+    svg.append("g")
+      .attr("transform", "translate(" + margin + "," + height + ")")
+      .call(x_axis)
+      .attr("class", "xAxis")
+     
+
+    // Add Y axis
+    var y_axis = d3.axisLeft()
+      .scale(yscale)
+      .tickValues([])
+    svg.append("g")
+      .attr("transform", "translate(" + margin + ", 0 )")
+      .call(y_axis)
+      .attr("class", "yAxis")
+
+    // Add X axis label
+    svg.append("text")             
+      .attr("text-anchor", "middle")
+      .attr("x", width/2 + margin)
+      .attr("y", height + 40)
+      .text("Letter");
+
+    // Add Y axis label
+    svg.append("text")
+      .attr("text-anchor", "middle")
+      .attr("x", -(height/2))
+      .attr("y", 0)
+      .attr("dy", ".75em")
+      .attr("transform", "rotate(-90)")
+      .text("Frequency");  
+
+    // Add Bars
+    var bars = svg.selectAll(".bar")
+      .data(d)
+      .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d){ return xscale(d.letter) + margin })
+      .attr("y", function(d){ return yscale(d.frequency) })
+      .attr("height", function(d){ return height - yscale(d.frequency) })
+      .attr("width", function(d){ return xscale.bandwidth() })
+  }
   </script>
 
 <script>
@@ -534,8 +553,9 @@
     }
   
     async function submitAnswer() {
+      var guess = document.getElementById('guess').value
       // checks for valid answer
-      console.log(document.getElementById('guess').value)
+      console.log(guess)
       /*
       if (!isNaN(document.getElementById('guess').value)) {
           console.log("it's a number")
@@ -543,11 +563,17 @@
 
       }
       */
+      // checks if guess is valid
+      if (isNaN(guess) || guess>1 ){
+        alert("Please check your answer.");
+        return false;
+      }
+
       // send answer to storage
       var tempResult = {
         'trialNum': trialCount,
         'visType': visOrder[trialCount],
-        'percentGuessed': document.getElementById('guess').value,
+        'percentGuessed': guess,
         'percentActual': percentActual,
         'gender': document.getElementById("gender").value,
         'age': document.getElementById("age").value
@@ -569,8 +595,60 @@
       console.log(results)
     }
 
-    function getResults() {
+    function exportToCsv(filename, rows) {
+    var processRow = function (row) {
+        var finalVal = '';
+        for (var j = 0; j < row.length; j++) {
+            var innerValue = row[j] === null ? '' : row[j].toString();
+            if (row[j] instanceof Date) {
+                innerValue = row[j].toLocaleString();
+            };
+            var result = innerValue.replace(/"/g, '""');
+            if (result.search(/("|,|\n)/g) >= 0)
+                result = '"' + result + '"';
+            if (j > 0)
+                finalVal += ',';
+            finalVal += result;
+        }
+        return finalVal + '\n';
+    };
 
+    var csvFile = '';
+    for (var i = 0; i < rows.length; i++) {
+        csvFile += processRow(rows[i]);
+    }
+
+    var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) { // IE 10+
+        navigator.msSaveBlob(blob, filename);
+    } else {
+        var link = document.createElement("a");
+        if (link.download !== undefined) { // feature detection
+            // Browsers that support HTML5 download attribute
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }
+      }
+  }
+
+  function exportData(dataStructsArray) {
+      var rows = [];
+      for (var i = 0; i < dataStructsArray.length; i++) {
+        rows[i] = [dataStructsArray[i].trialNum, dataStructsArray[i].gender, dataStructsArray[i].age, 
+          dataStructsArray[i].visType, dataStructsArray[i].percentGuessed, dataStructsArray[i].percentActual]
+      }
+      print(rows);
+      exportToCsv('data.csv', rows);
+
+  }
+
+    function getResults() {
+      exportData(results);
     }
   
   </script>
