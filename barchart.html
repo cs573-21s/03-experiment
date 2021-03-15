@@ -2,6 +2,7 @@
 
 
 <style>
+  
 </style>
 
 <body>
@@ -96,8 +97,9 @@
       .padding(0.4);
 
     var yscale = d3.scaleLinear()
-      .domain( d3.extent(d, function(d){ return d.frequency; }))
+      .domain([0, 105])    //d3.max(d, function(d){return d.frequency;}
       .range( [height, 0] );
+    console.log(d3.max(d, d.frequency));
 
     // Add X axis
     var x_axis = d3.axisBottom()
@@ -106,10 +108,12 @@
       .attr("transform", "translate(" + margin + "," + height + ")")
       .call(x_axis)
       .attr("class", "xAxis")
-      
+     
+
     // Add Y axis
     var y_axis = d3.axisLeft()
       .scale(yscale)
+      .tickValues([])
     svg.append("g")
       .attr("transform", "translate(" + margin + ", 0 )")
       .call(y_axis)
@@ -136,9 +140,9 @@
       .data(d)
       .enter().append("rect")
       .attr("class", "bar")
-      .attr("x", function(d){ return xscale(d.letter)+margin })
-      .attr("y", function(d){ return height - yscale(d.frequency) })
-      .attr("height", function(d){ return yscale(d.frequency)})
+      .attr("x", function(d){ return xscale(d.letter) + margin })
+      .attr("y", function(d){ return yscale(d.frequency) })
+      .attr("height", function(d){ return height - yscale(d.frequency) })
       .attr("width", function(d){ return xscale.bandwidth() })
   }
 </script>
