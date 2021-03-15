@@ -64,13 +64,9 @@
     .button:focus { outline:0; }
     .button:hover { background-color: #39a3aa;}
     .button:active{ transform: translateY(2px); }
-    #restart-button{ 
+    #get-results{ 
         width:9rem;
-        height:4rem;
-    }
-
-    #vis {
-
+        height:3.5rem;
     }
 
     </style>
@@ -163,7 +159,7 @@
       var gender = form["gender"].value;
       var age = form["age"].value;
       console.log(!isNaN(age))
-      if ( gender == "blank" || isNaN(age) ){ 
+      if ( gender == "blank" || isNaN(age) || age == ""){ 
         alert("Please check your answers and fill out form.");
         return false;
       }
@@ -565,7 +561,7 @@
       }
       */
       // checks if guess is valid
-      if (isNaN(guess) || guess>1 ){
+      if (isNaN(guess) || guess>1 || guess==""){
         alert("Please check your answer.");
         return false;
       }
