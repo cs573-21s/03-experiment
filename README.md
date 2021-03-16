@@ -12,6 +12,8 @@ Experiment
 ===
 Data is cool
 
+Link: https://jhyuen.github.io/03-experiment/index.html
+
 Achievements
 ===
 ## Technical
