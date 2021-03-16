@@ -1,0 +1,17 @@
+body {
+  margin: auto;
+  text-align: center;
+}
+
+/* .bar {
+  fill: black;
+} */
+.line {
+  fill: none;
+  stroke: #555;
+  stroke-width: 1;
+}
+
+.dot {
+  stroke: #333;
+}

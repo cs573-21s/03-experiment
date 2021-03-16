@@ -1,24 +1,46 @@
-[
-  {
-    "value": 48,
-    "compare": true
-  },
-{
-    "value": 17,
-    "compare": false
-  },
-{
-    "value": 69,
-    "compare": true
-  },
-
-{
-    "value": 13,
-    "compare": false
-  },
-
-{
-    "value": 7,
-    "compare": false
-  }
-]
+[{
+  "value": 8,
+  "compare": false
+}, {
+  "value": 14,
+  "compare": false
+}, {
+  "value": 21,
+  "compare": false
+}, {
+  "value": 84,
+  "compare": false
+}, {
+  "value": 57,
+  "compare": false
+}, {
+  "value": 91,
+  "compare": false
+}, {
+  "value": 9,
+  "compare": false
+}, {
+  "value": 74,
+  "compare": false
+}, {
+  "value": 18,
+  "compare": false
+}, {
+  "value": 21,
+  "compare": true
+}, {
+  "value": 33,
+  "compare": false
+}, {
+  "value": 68,
+  "compare": false
+}, {
+  "value": 2,
+  "compare": true
+}, {
+  "value": 71,
+  "compare": false
+}, {
+  "value": 47,
+  "compare": false
+}]
