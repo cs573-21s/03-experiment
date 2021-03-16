@@ -7,6 +7,10 @@
 
     <script>
 
+      let radialScale = d3.scaleLinear()
+          .domain([0,11])
+          .range([0,250]);
+
       function angleToCoordinate(angle, value){
         let x = Math.cos(angle) * radialScale(value);
         let y = Math.sin(angle) * radialScale(value);
@@ -15,83 +19,111 @@
 
       function getPathCoordinates(data_point){
         let coordinates = [];
-        for (var i = 0; i < features.length; i++){
-          let ft_name = features[i];
-          let angle = (Math.PI / 2) + (2 * Math.PI * i / features.length);
-          coordinates.push(angleToCoordinate(angle, data_point[ft_name]));
+        for (var i = 0; i < data_point.length; i++){
+          let point = data_point[i];
+          let ft_name = point.letter;
+          let angle = (Math.PI / 2) + (2 * Math.PI * i / data_point.length);
+          coordinates.push(angleToCoordinate(angle, (point.frequency / 10)));
         }
         return coordinates;
       }
 
-      let data = [];
-      let features = ["A","B","C","D","E","F", "G", "H", "I", "J"];
-      //generate the data
-      for (var i = 0; i < 3; i++){
-        var point = {}
-        ////choose size of data set between 1-9
-        features.forEach(f => point[f] = Math.random() * 8 + 1);
-        data.push(point);
+      function generateDataset() {
+        //choose size of data set between 5-10
+        let datasetCount = Math.floor(Math.random() * 6) + 5;
+
+        //choose two random data points
+        let chosenPoint1 = Math.floor(Math.random() * datasetCount);
+        let chosenPoint2 = Math.floor(Math.random() * datasetCount);
+        while (chosenPoint1 == chosenPoint2) { //make sure we did not choose same one twice
+          chosenPoint2 = Math.floor(Math.random() * datasetCount);
+        }
+
+        //create dataset
+        let myDataset = Array.from({length: datasetCount}, () => Math.floor(Math.random() * 101));
+
+        var letterData = [
+            {letter: "A", frequency: myDataset[0]},
+            {letter: "B", frequency: myDataset[1]},
+            {letter: "C", frequency: myDataset[2]},
+            {letter: "D", frequency: myDataset[3]},
+            {letter: "E", frequency: myDataset[4]},
+            {letter: "F", frequency: myDataset[5]},
+            {letter: "G", frequency: myDataset[6]},
+            {letter: "H", frequency: myDataset[7]},
+            {letter: "I", frequency: myDataset[8]},
+            {letter: "J", frequency: myDataset[9]}
+        ];
+
+        letterData.length = datasetCount; //Reduce array to correct size
+
+        //create struct
+        var data = {
+          mark1: chosenPoint1,
+          mark2: chosenPoint2,
+          dataset: letterData
+        };
+
+        return data;
       }
 
-      let svg = d3.select("body").append("svg")
-          .attr("width", 500)
-          .attr("height", 500);
+      function buildRadarChart(dataset){
+        let svg = d3.select("body").append("svg")
+            .attr("width", 500)
+            .attr("height", 500);
 
-      let radialScale = d3.scaleLinear()
-          .domain([0,11])
-          .range([0,250]);
-      let ticks = [2,4,6,8,10];
+        let ticks = [2,4,6,8,10];
 
-      ticks.forEach(t =>
-            svg.append("circle")
-            .attr("cx", 250)
-            .attr("cy", 250)
-            .attr("fill", "none")
-            .attr("stroke", "gray")
-            .attr("r", radialScale(t))
-      );
+        ticks.forEach(t =>
+              svg.append("circle")
+              .attr("cx", 250)
+              .attr("cy", 250)
+              .attr("fill", "none")
+              .attr("stroke", "gray")
+              .attr("r", radialScale(t))
+        );
 
-      for (var i = 0; i < features.length; i++) {
-        let ft_name = features[i];
-        let angle = (Math.PI / 2) + (2 * Math.PI * i / features.length);
-        let line_coordinate = angleToCoordinate(angle, 10);
-        let label_coordinate = angleToCoordinate(angle, 10.5);
+        for (var i = 0; i < dataset.length; i++) {
+          let ft_name = dataset[i].letter;
+          let angle = (Math.PI / 2) + (2 * Math.PI * i / dataset.length);
+          let line_coordinate = angleToCoordinate(angle, 10);
+          let label_coordinate = angleToCoordinate(angle, 10.5);
 
-        //draw axis line
-        svg.append("line")
-        .attr("x1", 250)
-        .attr("y1", 250)
-        .attr("x2", line_coordinate.x)
-        .attr("y2", line_coordinate.y)
-        .attr("stroke","black");
+          //draw axis line
+          svg.append("line")
+          .attr("x1", 250)
+          .attr("y1", 250)
+          .attr("x2", line_coordinate.x)
+          .attr("y2", line_coordinate.y)
+          .attr("stroke","black");
 
-        //draw axis label
-        svg.append("text")
-        .attr("x", label_coordinate.x - 5)
-        .attr("y", label_coordinate.y + 5)
-        .text(ft_name);
-      }
+          //draw axis label
+          svg.append("text")
+          .attr("x", label_coordinate.x - 5)
+          .attr("y", label_coordinate.y + 5)
+          .text(ft_name);
+        }
 
-      let line = d3.line()
-          .x(d => d.x)
-          .y(d => d.y);
-      let colors = ["black", "black", "black"];
+        let line = d3.line()
+            .x(d => d.x)
+            .y(d => d.y);
 
-      for (var i = 0; i < data.length; i ++){
-        let d = data[i];
-        let color = colors[i];
-        let coordinates = getPathCoordinates(d);
+        let coordinates = getPathCoordinates(dataset);
 
         //draw the path element
         svg.append("path")
         .datum(coordinates)
         .attr("d",line)
         .attr("stroke-width", 3)
-        .attr("stroke", color)
-        .attr("fill", color)
+        .attr("stroke", "black")
+        .attr("fill", "black")
         .attr("stroke-opacity", 1)
-        .attr("opacity", 0.65);
+        .attr("opacity", 1);
       }
+
+      let data = generateDataset();
+      buildRadarChart(data.dataset);
+      console.log(data.dataset);
 
     </script>
 </body>
