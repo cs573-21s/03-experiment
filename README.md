@@ -10,9 +10,16 @@ Authors
 
 Experiment
 ===
-Data is cool
+Link: https://jhyuen.github.io/03-experiment
 
-Link: https://jhyuen.github.io/03-experiment/index.html
+## Screenshots
+
+## Error Barchart with 95% CIs
+
+## Discussion
+hypothesis and goals
+compare between mcgill
+
 
 Achievements
 ===
@@ -24,8 +31,6 @@ Achievements
     ![Button Animation](img/buttonAnimation.gif)
 
 3. **Analyzed Gender and Age Distribution** - In addition to analyzing tester's guessing of percentages across the various visualizations, we also asked them for their age and gender in the hopes of additionally observing any significant trends or patterns.
-
-4. **Analysis Visualization Animation - ?** - 
 
 ## Design Achievements
 
