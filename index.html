@@ -115,6 +115,7 @@
     <div id="testing" style="display:none">
         <div class="div header">
             <h2>CS573 Data Visualization</h2>
+            <p id=question-count-text>Question ?/60</p>
         </div>
         <div class="div" id="experiment">
             <div id="vis"></div>
@@ -532,21 +533,15 @@
         biggerLetter = data.dataset[data.mark2].letter
         percentActual = data.dataset[data.mark1].frequency/data.dataset[data.mark2].frequency
       }
-
-      document.getElementById('question-text').innerHTML = "What percent of " + smallerLetter + " makes up " + biggerLetter + "?"
+    
+      document.getElementById('question-count-text').innerHTML = "Question " + (trialCount+1) + "/60"
+      document.getElementById('question-text').innerHTML = "What percentage of " + biggerLetter + " does " + smallerLetter + " make up?"
     }
 
     async function submitAnswer() {
       var guess = document.getElementById('guess').value
       // checks for valid answer
       console.log(guess)
-      /*
-      if (!isNaN(document.getElementById('guess').value)) {
-          console.log("it's a number")
-      } else {
-
-      }
-      */
       // checks if guess is valid
       if (isNaN(guess) || guess>1 || guess==""){
         alert("Please check your answer.");
