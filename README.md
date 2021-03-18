@@ -13,6 +13,7 @@ Experiment
 Link to Experiment: https://jhyuen.github.io/03-experiment
 
 ## Error Barchart with 95% CIs
+![Percent Error](img/PercentError.png)
 
 ## Reference Charts
 ![Cleveland & McGill](img/Cleveland&McGill.png)
@@ -26,23 +27,25 @@ Based on our results, we see that rectilinear visualizations like bargraphs resu
 ### Bargraph - Best 
 As our points of comparisons were randomized, our results relate more with T3 than T1 as used in the Cleveland & McGill study and Crowdsourced Results. We determined a log error of 1.373877129 which is lower than both the Cleveland & McGill and Crowdsourced Results. Even so, bargraphs performed the best compared to its radial counter parts which was also found in the Crowdsourced results.
 
-![Bargraph]()
+![Bargraph](img/screencap3.PNG)
 
 ### Radar Chart - Middle 
 We see in the Crowdsourced Results that T7 measures the radius of circles which is most related to our radial style visualizations. We see that radar charts produced a log error of 1.898786351 that was lower than T7 which had a log error above 2.5. Radar charts scored in the middle of pack doing better than circular barplots and worse than bargraphs. This observation may be due to radar chart's radar lines as they acts as markers for relative distance. 
 
-![Radar]()
+![Radar](img/screencap4.PNG)
 
 ### Circular Barplot - Worst 
 Of all the visualizations tested, circular barplots performed the worst with a log error of 2.432067109. If we compare it to T7 in Crowdsourced Results as it compares the size of radial objects, we see that the circular barplot scored slightly lower. 
 
-![Circular Barplot]()
+![Circular Barplot](img/screencap5.PNG)
 
 ## Additional Experiment Screenshots
 ### Opener
 ![Opener](img/opener.png)
 ### Get Results
 ![Closer](img/closer.png)
+### All 3 Visualizations
+![Closer](img/screencapcombined.png)
 
 
 Achievements
