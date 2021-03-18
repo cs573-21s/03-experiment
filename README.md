@@ -20,24 +20,24 @@ Link to Experiment: https://jhyuen.github.io/03-experiment
 ![Crowdsourced](img/Crowdsourced.png)
 
 ## Discussion
-hypothesis and goals - Sam
+The question we attempted to answer in this experiment was: How effective are radial visualizations compared to rectilinear visualizations in determining relative size? Our hypothesis was that rectilinear visualizations are more effective for determining relative size than radial visualizations. To test our hypothesis, we created three different types of visualizations and asked participants to look at instances of each visualization to determine the relative size. We created one rectilinear visualization (a bar plot) and two radial visualizations (a radar chart and a circular bar chart). Our goal was to prove that the bar plot was better for determining relative size than both the radar chart and the circular bar plot.
 
-Based on our results, we see that rectilinear visualizations like bargraphs result in a lower log error than radial visualizations like radar charts and circular barplots confirming our hypothesis that rectilinear visualizations are more effective for determining relative size than radial visualizations. Between radar charts and circular barplots, radar charts did better than circular barplots possibly due to having radar lines.
+Based on our results, we see that rectilinear visualizations like bar graphs result in a lower log error than radial visualizations like radar charts and circular bar plots confirming our hypothesis that rectilinear visualizations are more effective for determining relative size than radial visualizations. Between radar charts and circular bar plots, radar charts did better than circular bar plots possibly due to having radar lines.
 
-### Bargraph - Best 
-As our points of comparisons were randomized, our results relate more with T3 than T1 as used in the Cleveland & McGill study and Crowdsourced Results. We determined a log error of 1.373877129 which is lower than both the Cleveland & McGill and Crowdsourced Results. Even so, bargraphs performed the best compared to its radial counter parts which was also found in the Crowdsourced results.
+### Bar Graph - Best
+As our points of comparisons were randomized, our results relate more with T3 than T1 as used in the Cleveland & McGill study and Crowdsourced Results. We determined a log error of 1.373877129 which is lower than both the Cleveland & McGill and Crowdsourced Results. Even so, bar graphs performed the best compared to its radial counter parts which was also found in the Crowdsourced results.
 
-![Bargraph](img/screencap3.PNG)
+![Bar Graph](img/screencap3.PNG)
 
-### Radar Chart - Middle 
-We see in the Crowdsourced Results that T7 measures the radius of circles which is most related to our radial style visualizations. We see that radar charts produced a log error of 1.898786351 that was lower than T7 which had a log error above 2.5. Radar charts scored in the middle of pack doing better than circular barplots and worse than bargraphs. This observation may be due to radar chart's radar lines as they acts as markers for relative distance. 
+### Radar Chart - Middle
+We see in the Crowdsourced Results that T7 measures the radius of circles which is most related to our radial style visualizations. We see that radar charts produced a log error of 1.898786351 that was lower than T7 which had a log error above 2.5. Radar charts scored in the middle of pack doing better than circular bar plots and worse than bar graphs. This observation may be due to radar chart's radar lines as they acts as markers for relative distance.
 
-![Radar](img/screencap4.PNG)
+![Radar Chart](img/screencap4.PNG)
 
-### Circular Barplot - Worst 
-Of all the visualizations tested, circular barplots performed the worst with a log error of 2.432067109. If we compare it to T7 in Crowdsourced Results as it compares the size of radial objects, we see that the circular barplot scored slightly lower. 
+### Circular Bar plot - Worst
+Of all the visualizations tested, circular bar plots performed the worst with a log error of 2.432067109. If we compare it to T7 in Crowdsourced Results as it compares the size of radial objects, we see that the circular bar plot scored slightly lower.
 
-![Circular Barplot](img/screencap5.PNG)
+![Circular Bar Plot](img/screencap5.PNG)
 
 ## Additional Experiment Screenshots
 ### Opener
@@ -59,7 +59,7 @@ Achievements
 
     ![Button Animation](img/buttonAnimation.gif)
 
-3. **Analyzed Gender and Age Distribution** - In addition to analyzing tester's guessing of percentages across the various visualizations, we also asked them for their age and gender in the hopes of additionally observing any significant trends or patterns. We found that between males and females in the analysis of radar charts, males had an average log error of 1.543975289 which was below the average, while females had an average log error of 2.152222824 which was above the average. For circular barplots, males had an average log error of 2.183564587 which was below the average, while females had an average log error of 2.609568911 which was above the average. Lastly, for bargraphs, males scored an average log error of 1.195938747 which was below the average, while females scores an average log error of 1.500975974 which was above the average. Even though not statistically significant, we found it interesting that females had a higher log error than males on average for each of the visualizations.
+3. **Analyzed Gender and Age Distribution** - In addition to analyzing tester's guessing of percentages across the various visualizations, we also asked them for their age and gender in the hopes of additionally observing any significant trends or patterns. We found that between males and females in the analysis of radar charts, males had an average log error of 1.543975289 which was below the average, while females had an average log error of 2.152222824 which was above the average. For circular bar plots, males had an average log error of 2.183564587 which was below the average, while females had an average log error of 2.609568911 which was above the average. Lastly, for bar graphs, males scored an average log error of 1.195938747 which was below the average, while females scores an average log error of 1.500975974 which was above the average. Even though not statistically significant, we found it interesting that females had a higher log error than males on average for each of the visualizations.
 
 ## Design Achievements
 
@@ -72,5 +72,8 @@ Achievements
 References
 ===
 
-## Circular Barplot
+## Circular Bar plot
 https://www.d3-graph-gallery.com/graph/circular_barplot_label.html
+
+## Radar Chart
+https://yangdanny97.github.io/blog/2019/03/01/D3-Spider-Chart
