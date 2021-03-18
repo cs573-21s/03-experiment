@@ -20,7 +20,7 @@ Link to Experiment: https://jhyuen.github.io/03-experiment
 ![Crowdsourced](img/Crowdsourced.png)
 
 ## Discussion
-The question we attempted to answer in this experiment was: How effective are radial visualizations compared to rectilinear visualizations in determining relative size? Our hypothesis was that rectilinear visualizations are more effective for determining relative size than radial visualizations. To test our hypothesis, we created three different types of visualizations and asked participants to look at instances of each visualization to determine the relative size. We created one rectilinear visualization (a bar plot) and two radial visualizations (a radar chart and a circular bar chart). Our goal was to prove that the bar plot was better for determining relative size than both the radar chart and the circular bar plot.
+The question we attempted to answer in this experiment was: How effective are radial visualizations compared to rectilinear visualizations in determining relative size? Our hypothesis was that rectilinear visualizations are more effective for determining relative size than radial visualizations. To test our hypothesis, we created three different types of visualizations using our data generation function (see code for data generation function) and asked participants to look at instances of each visualization to determine the relative size. We created one rectilinear visualization (a bar graph) and two radial visualizations (a radar chart and a circular bar plot). Our goal was to prove that the bar graph was better for determining relative size than both the radar chart and the circular bar plot.
 
 Based on our results, we see that rectilinear visualizations like bar graphs result in a lower log error than radial visualizations like radar charts and circular bar plots confirming our hypothesis that rectilinear visualizations are more effective for determining relative size than radial visualizations. Between radar charts and circular bar plots, radar charts did better than circular bar plots possibly due to having radar lines.
 
@@ -51,11 +51,11 @@ Of all the visualizations tested, circular bar plots performed the worst with a 
 Achievements
 ===
 ## Technical
-1.  **Protected Fields with Error Messages** - Upon submitting an answer, our system checks if the inputted values is valid. For example, when inputting a percentage guess, the system checks if the number is a decimal value. If it is, then the system generates the next screen. If not, then an alert is triggered which tells the user why their answer is invalid.
+1.  **Protected Fields with Error Messages** - Upon submitting an answer, our system checks if the inputted values is valid. For example, when inputting a percentage guess, the system checks if the number is a decimal value. If it is, then the system generates the next screen. If not, then an alert is triggered which tells the user that their answer is invalid.
 
     ![Error message](img/error-message.png)
 
-2. **Button Animation** - When hovering over the button, it changes to a darker color to indicate what the mouse is selecting. When clicked, the button slightly moves down, as if user was pushing the button.
+2. **Button Animation** - When hovering over the button, it changes to a darker color to indicate what the mouse is selecting. When clicked, the button slightly moves down, as if a user was pushing the button.
 
     ![Button Animation](img/buttonAnimation.gif)
 
@@ -77,3 +77,6 @@ https://www.d3-graph-gallery.com/graph/circular_barplot_label.html
 
 ## Radar Chart
 https://yangdanny97.github.io/blog/2019/03/01/D3-Spider-Chart
+
+## Bar Graph
+https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js
