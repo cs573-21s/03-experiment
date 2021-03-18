@@ -10,21 +10,47 @@ Authors
 
 Experiment
 ===
-Link: https://jhyuen.github.io/03-experiment
-
-## Screenshots
+Link to Experiment: https://jhyuen.github.io/03-experiment
 
 ## Error Barchart with 95% CIs
 
+## Reference Charts
+![Cleveland & McGill](img/Cleveland&McGill.png)
+![Crowdsourced](img/Crowdsourced.png)
+
 ## Discussion
-hypothesis and goals
-compare between mcgill
+hypothesis and goals - Sam
+
+Based on our results, we see that rectilinear visualizations like bargraphs result in a lower log error than radial visualizations like radar charts and circular barplots confirming our hypothesis that rectilinear visualizations are more effective for determining relative size than radial visualizations. Between radar charts and circular barplots, radar charts did better than circular barplots possibly due to having radar lines.
+
+### Bargraph - Best 
+As our points of comparisons were randomized, our results relate more with T3 than T1 as used in the Cleveland & McGill study and Crowdsourced Results. We determined a log error of 1.373877129 which is lower than both the Cleveland & McGill and Crowdsourced Results. Even so, bargraphs performed the best compared to its radial counter parts which was also found in the Crowdsourced results.
+
+![Bargraph]()
+
+### Radar Chart - Middle 
+We see in the Crowdsourced Results that T7 measures the radius of circles which is most related to our radial style visualizations. We see that radar charts produced a log error of 1.898786351 that was lower than T7 which had a log error above 2.5. Radar charts scored in the middle of pack doing better than circular barplots and worse than bargraphs. This observation may be due to radar chart's radar lines as they acts as markers for relative distance. 
+
+![Radar]()
+
+### Circular Barplot - Worst 
+Of all the visualizations tested, circular barplots performed the worst with a log error of 2.432067109. If we compare it to T7 in Crowdsourced Results as it compares the size of radial objects, we see that the circular barplot scored slightly lower. 
+
+![Circular Barplot]()
+
+## Additional Experiment Screenshots
+### Opener
+![Opener](img/opener.png)
+### Get Results
+![Closer](img/closer.png)
 
 
 Achievements
 ===
 ## Technical
 1.  **Protected Fields with Error Messages** - Upon submitting an answer, our system checks if the inputted values is valid. For example, when inputting a percentage guess, the system checks if the number is a decimal value. If it is, then the system generates the next screen. If not, then an alert is triggered which tells the user why their answer is invalid.
+
+    ![Error message](img/error-message.png)
 
 2. **Button Animation** - When hovering over the button, it changes to a darker color to indicate what the mouse is selecting. When clicked, the button slightly moves down, as if user was pushing the button.
 
