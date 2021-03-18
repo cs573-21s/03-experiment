@@ -59,7 +59,7 @@ Achievements
 
     ![Button Animation](img/buttonAnimation.gif)
 
-3. **Analyzed Gender and Age Distribution** - In addition to analyzing tester's guessing of percentages across the various visualizations, we also asked them for their age and gender in the hopes of additionally observing any significant trends or patterns.
+3. **Analyzed Gender and Age Distribution** - In addition to analyzing tester's guessing of percentages across the various visualizations, we also asked them for their age and gender in the hopes of additionally observing any significant trends or patterns. We found that between males and females in the analysis of radar charts, males had an average log error of 1.543975289 below the average, while females had an average log error of 2.152222824 above the average. For circular barplots, males had an average log error of 2.183564587 below the average, while females had an average log error of 2.609568911 above the average. Lastly, for bargraphs, males scored an average log error of 1.195938747 which was below the average, while females scores an average log error of 1.500975974 which was above the average. Even though not statistically significant, we found it interesting that females had a higher log error than males on average for each of the visualizations.
 
 ## Design Achievements
 
