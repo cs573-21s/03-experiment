@@ -1,96 +1,129 @@
-Assignment 3 - Replicating a Classic Experiment  
-===
+# Assignment 3: Experiment
 
-For the scope of this project, assume the role of a scientist who runs experiments for a living.
+Imogen Cleaver-Stigum, Andrew Nolan, Matthew St. Louis, and Jyalu Wu
 
-Q: How do we know that bar charts are "better" than pie charts?  
-A: Controlled experiments!
+[Published Site](https://cs573-a3.web.app)  
 
-In this assignment you'll implement a simple controlled experiment using some of the visualizations you’ve been building in this class. 
-You'll need to develop support code for the experiment sequence, results file output, and other experiment components. 
-(These are all simple with Javascript buttons and forms.)
-The main goals for you are to a) test three competing visualizations, b) implement data generation and error calculation functions inspired by Cleveland and McGill's 1984 paper, c) run the experiment with 10 participants (or a trial equivalent), and d) do some basic analysis and reporting of the results.
+## Experiment
+### Intro and background: Cleveland-McGill paper
+In 1984, William Cleveland and Robert McGill conducted a famous experiment in graphical perception that was momentous for the field of data visualization. This experiment provided a controlled setting to test the efficacy of pie charts, bar charts, and stacked bar variants. The results of the study revealed that bar charts were easier to read and compare than pie charts. Participants had nearly double the log error when comparing the ratio of small to large values in pie charts. The study further determined that position was the most effective visual channel for magnitude.
 
-For this assignment you should aim to write everything from scratch. For experimentation it is often necessary to control all elements of the chart.
-You should definitely *reference* demo programs from books or the web, and if you do please provide a References section with links at the end of your Readme.
+Now, we seek to recreate the results of this experiment by running our own study to compare the effectiveness of the position and angle visual channels by comparing bar charts, pie charts, and spiral histograms. Additionally, we developed several demographic questions to seek further insight into the differences in perception of data visualizations. In the following sections we discuss our hypotheses, experimental procedure, and study results. 
 
-Requirements
----
+If you wish to view our experiment you can access it here: https://cs573-a3.web.app/.
 
-- Look it over Cleveland and McGill's original experiment (see the section below) and [watch this video](experiment-example.mp4) to get a sense of the experiment structure and where your visualizations will go.
-- When viewing the example experiment video, note the following:
-    - Trials are in random order.  
-    - Each trial has a randomly generated set of 5-10 data points.  
-    - Two of these data points are marked.  
-    - (Note: the experiment UI and User Experience could be better. Plenty of design achievements here).
-- Implement the data generation code **as described in the Cleveland & McGill paper**. 
-    - The goal is to generate a set of random datapoints (usually 5 or 10, with values be between 0 and 100) and to mark two of them for comparison in the trial. 
-- Add 3 visualizations (i.e. conditions) to your experiment. When you are adding these visualizations, think about *why* these visualizations are interesting to test. In other words, keep in mind a *testable hypothesis* for each of the added visualization. Some good options include bar charts, pie charts, stacked-bar charts, and treemaps. You can also rotate your bar chart to be horizontal or upside-down as one of your conditions. You are encouraged to test unorthodox charts -- radar charts come to mind, but there are MANY possibilities here-- feel free to be creative!
-    - Follow the style from Cleveland and McGill closely (e.g. no color, simple lines) unless you are specifically testing a hypothesis (e.g. color versus no color). Pay attention to spacing between elements like bars. Do not mark bars for comparison using color-- this makes the perceptual task too easy.
-- After each trial, implement code that grades and stores participant’s responses.
-- At the end of the experiment, to get the data, one easy option use Javascript to show the data from the current experiment\* (i.e. a comma separated list in a text box) and copy it into your master datafile. See the Background section below for an example of what this file should look like. (\*Alternately implement a server, if you're experienced with that sort of thing.)
 
-- Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
-- Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
-- Run your experiment with 10 or more participants, or-- make sure you get at least 200 trials **per visualization type** in total.  
-    - Grab friends or people in the class.   
-    - Run at least 20 trials per visualization type, per participant. This is to ensure that you cover the range of possible answers (e.g. 5%, 10%, ..., 95%)
-- Make sure to save the resulting CSV after each participant. Compile the results into a master csv file (all participants, all trials).
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Include example images of each visualization as they appeared in your experiment (i.e. if you used a pie chart show the actual pie chart you used in the experiment along with the markings, not an example from Google Images).
+### Hypotheses
+We decided to test 3 types of hypotheses: three regarding how the type of visualization affects the accuracy of people’s perceptions and four regarding whether demographic information has any affect on this. 
 
-## General Requirements
+#### Hypotheses about Types of Vis
+- Users will have more accurate perceptions of relative bar/sector sizes in bar charts compared to pie charts. 
+- Users will have more accurate perceptions of relative bar sizes in bar charts compared to spiral histograms. 
+- Users will have more accurate perceptions of relative bar/sector sizes in pie charts compared to spiral histograms. 
 
-0. Your code should be forked from the GitHub repo and linked using GitHub pages.
-2. Your project should use d3 to build visualizations. 
-3. Your writeup (readme.md in the repo) should contain the following:
+#### Hypotheses about Demographics 
+- Users who are more familiar with vis will have more accurate perceptions of relative bar/sector sizes overall.
+- Users with a higher education level will have more accurate perceptions of relative bar/sector sizes overall. 
+- Users who are in the fields of data science and math will have more accurate perceptions of relative bar/sector sizes overall. We hypothesize this because these individuals might be more accustomed to looking at different kinds of visualizations.
+- Users who have more statistics experience will have more accurate perceptions of relative bar/sector sizes overall.  
 
-- Working link to the experiment hosted on gh-pages or some other site.
-- Concise description and screenshot of your experiment.
-- Description of the technical achievements you attempted with this project.
-- Description of the design achievements you attempted with this project.
 
-Background
----
+## Design & Setup
+### Runthrough or tour of our survey/website
+The interface we designed walks the user through our experiment in steps. The landing view is a welcome screen explaining a bit about the experiment and the class it is for.
 
-In 1984, William Cleveland and Robert McGill published the results of several controlled experiments that pitted bar charts against pies and stacked-bar variants. 
-Their paper (http://www.cs.ubc.ca/~tmm/courses/cpsc533c-04-spr/readings/cleveland.pdf) (http://info.slis.indiana.edu/~katy/S637-S11/cleveland84.pdf) is considered a seminal paper in data visualization.
-In particular, they ran a psychology-style experiment where users were shown a series of randomly-generated charts with two graphical elements marked like this:
+![Site - Welcome Page](img/site_welcome.png)
 
-![cleveland bar chart](img/cleveland-bar.png)
+When the user presses the “Get Started” button to advance, they will see a screen for the survey. The user will answer questions about their level of education, formal statistics training, familiarity with data visualization, and field of study. Once all questions have a valid response, the user can activate the “Submit” button to continue to the experiment (Described in the “[Our Charts](#our-charts)” section). 
 
-Participants were then asked, "What percentage is the smaller of the larger?". 
-This was repeated hundreds of time with varying data and charts. 
-By the end of the study, Cleveland and McGill had amassed a large dataset that looked like this:
+![Site - Survey Page](img/site_survey.png)
 
-![cleveland table](img/cleveland-table.png)
+When the user has completed the experiment, they will be presented with the following Thank You view, inviting them to submit more data if they wish to. This allows them to answer more questions about the visualizations without re-entering the survey information. 
 
-__Log-base-2 or "cm-error"__: The true percent is the actual percentage of the smaller to the larger, while the reported percent is what participants reported. 
-Cleveland and McGill recognized that their analyses would be biased if they took `abs(ReportedPercent – TruePercent)` as their score for error. 
-To compensate, they came up with a logarithmic scale for error with this equation:
+![Site - Thank You Page](img/site_thanks.png)
+### Our Charts
+During the experiment, the user is presented with fifteen visualizations. Five of these are bar charts, five of these are pie charts, and five of these are spiral histograms. Their ordering is random. Each has two sections marked, and the user’s task is to answer what portion of the larger marked section is represented by the smaller marked section. The marked areas are randomly generated, though they are always guaranteed to be separated by at least one unmarked area.
 
-![cleveland equation](img/cleveland-equation.png)
+![Site - Bar Chart](img/site_bar.png)
 
-You’ll be implementing this error score as part of the lab. 
-(Hint: it’s not a trick question, this is just to familiarize you with the experiment protocol). 
-With this Cleveland-McGill error score you can better compare the performance of the charts you test to figure out which one performs the best.
+![Site - Pie Chart](img/site_pie.png)
 
-As a baseline, compare your average Error scores to the following chart, which include both Cleveland and McGill’s results as well as more recent extensions of this experiment (lower error indicates better performance, and error bars are bootstrapped 95% confidence intervals (`http://en.wikipedia.org/wiki/Confidence_interval#Meaning_and_interpretation`)):
+![Site - Spiral Histogram](img/site_spiral.png)
 
-![cleveland results](img/cleveland-results.png)
+## Results
 
-GitHub Details
----
+We received 45 responses to our survey, each participant received 15 questions (5 for each visualization type), for a total of 675 data points (225 per vis type). Here we will discuss the results from our experiment and survey. The result dataset can be seen in the Github repository in the file “cs573-a3-final-export.json” in the data folder. There is also a .csv version of the data and a python script to convert the json to csv. The hypotheses presented above correspond to the following plots made in ggplot2 in R. All of the confidence intervals are at a 95% confidence level. 
 
-- Fork the GitHub Repository. You now have a copy associated with your username.
-- Make changes to index.html to fulfill the project requirements. 
-- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- Edit this README.md with a link to your gh-pages site: e.g. http://YourUsernameGoesHere.github.io/Experiment/index.html
-- Replace this file (README.md) with your writeup and Design/Technical achievements.
-- To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
-- Name your submission using the following scheme: 
-```
-a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
-```
+Our results may also be slightly skewed due to the design of the experiment and the wording of the instructions. We received feedback from multiple (5 or more) participants that they were confused by the instructions at first. Some of them answered the first couple questions with a misunderstanding of the instructions, and then figured out what we were asking as they answered more questions. Other participants had to ask for help or additional explanation to answer any questions. This might affect our results because some of the data we collected is skewed based on misunderstandings of the instructions. It might also affect our demographic data because it is possible that people who are more familiar with this type of experiment of this field were more likely to understand the instructions. This would mean that the differences in log error types by demographic groups might be representative of their ability to understand the instructions rather than their ability to accurately perceive the proportions. 
+
+### Vis Types
+![A plot showing confidence intervals for the log error of the vis perceptions by categories of vis type](img/ciByVis.png)
+
+The confidence intervals for the log error of estimates provide evidence that our three hypotheses about the vis types were all correct. The bar charts had lower average log error than pie charts, and pie charts had lower average log error than spiral bar charts. The confidence intervals have no overlap, so we can be 95% confident that the three hypotheses are true as we have tested them in this experiment. 
+
+From this data, we can reasonably conclude that bar charts are more effective at accurately representing data values than pie charts. These two chart types can be used to represent the same data, so they are relatively comparable. However, the spiral barchart also had some other factors that make it less simple to compare directly to the bar charts and pie charts. For example, the spiral barcharts had 17 data points each, whereas the pie charts and bar charts had 10 data points each. This was the case because the spiral bar charts are made to have more data points than 10, so they do not look like spirals with too few points. This could have caused more distraction and confusion for participants. Also, because there are more bars, but we used the same rules to generate the data, the proportional differences between the sizes of the spiral bar chart bars is slightly different from those of the bar charts and pie charts. This could also have affected perceptions, because it can be easier or harder to accurately perceive the difference between two things based on how significant the difference is. 
+
+Another difference is that the bars on the bar chart were physically larger on the page than the bars on the spiral bar chart or the sectors on the pie chart. This means that other than just the difference of vis type, the bar charts may seem to have more accurate perceptions because the participants found it easier to perceive differences when the bars/sectors were larger. 
+
+Overall, we conclude that the bar charts appear better than pie charts, and pie charts better than spiral bar charts, for accuracy of perceptions, based on the conditions of this experiment. However, we acknowledge that there were other factors than just the vis type that may also have affected these confidence intervals. 
+
+### Demographic Information
+The following figures show the results of our experiment broken down by each of the tested demographics. For each axis of comparison, the points shown aggregate all responses for that group across all three visualization types (bar chart, pie chart, spiral histogram). We discuss how comparison reflects on its respective hypothesis.
+
+![A plot showing confidence intervals for the log error of the vis perceptions by categories of the participant’s experience with statistics](img/ciByStatsExperience.png)
+
+This figure compares log error between different levels of statistics experience. Our initial hypothesis for statistics experience was that log error would decrease as statistics experience increases. The figure shows that this trend is weak at best. Those with the least statistics experience did worst as a group, but the mean for basic statistics training was better than that for a lot of statistics experience. The basic statistics training group had the smallest error bars, but this was likely due to the fact that the category consisted of roughly three times as many trails as the others. Overall, the data do not support our hypothesis.
+
+![A plot showing confidence intervals for the log error of the vis perceptions by categories of the participant’s field](img/ciByField.png)
+
+Our initial hypothesis for fields presumed mathematicians and data scientists would perform the best in this experiment. Unfortunately, no one taking the survey self-identified as a data scientist. However, we did receive responses from mathematicians. The math field did perform in the upper echelon, only being beaten by the physics and philosophy combination. However, it should be noted only one person identified as physics and philosophy, so the confidence interval is very large. Although our results do not completely match our hypothesis, with more data points it is plausible that math would be the highest and they did perform better than most categories. So the hypothesis is mostly correct.
+
+The combination of Physics and Philosophy, on average, performing the best does have an interesting correlation with data from other sources. According to [GRE results from 2012](https://www.wcu.edu/WebFiles/PDFs/PhilosophyPerformanceGRE.pdf), Physics and Philosophy are the two highest performing majors on the exam. With physics receiving the highest average score for quantitative reasoning, and philosophy receiving the highest scores in analytical and verbal reasoning. This may imply that the reasoning skills tested on the GRE are associated with visualization comprehension.
+
+There are some limitations on our field hypothesis results. The sample was not representative of all disciplines. The largest field reported in our testing demographic was technology; unsurprisingly a disproportionately large number of our sample was computer science majors. As we primarily solicited responses from WPI students, humanities fields are unrepresented in our data. Future work would benefit from seeking a larger sample size from a more diverse population.
+
+
+![A plot showing confidence intervals for the log error of the vis perceptions by categories of the participant’s experience with vis](img/ciByvisExperience.png)
+
+Our initial hypothesis was that users who are more familiar with reading visualizations would have more accurate perceptions of relative section sizes and thus the log error would be lower. Based on our results, people who self-reported as experts with visualizations did better than others on average. This is in line with our hypothesis, however only one participant self-identified as an expert so this may have skewed the data. In addition, those passing knowledge did somewhat better than those who were knowledgeable about visualizations, and those with no formal education did only slightly worse than the knowledgeable group on average. These results contradict our hypothesis, and thus the outcomes of our experiment do not strongly support our hypothesis.
+
+![A plot showing confidence intervals for the log error of the vis perceptions by categories of the participant’s education level](img/ciByEducation.png)
+
+The confidence intervals in the graph above show the average log error for our survey participants based on self-reported education level. Our initial hypothesis stated that users with higher education levels would perform better in this experiment. Based on our results, this hypothesis is not true. Participants with (or currently pursuing) a PhD or other doctorate degree did perform better, on average, than other college degrees. However, participants who self-reported their highest education level as high school performed better on average than all other education levels. Additionally, the worst performing education level, according to our experiment, was Masters students. These results defy our initial hypothesis. Based on the results we can assume that there is no correlation between education level and performance when analyzing graphs. There are limitations to our results. The vast majority of participants identified as Bachelors (BS) students, followed by masters students. If future work were to be done on this hypothesis, it would benefit the study to have more participants at the extremes with PhDs or with only high school education. We only received two participants in both of these categories.
+
+
+
+## Technical Achievements
+- __React frontend__: We used React to design a responsive, data-driven frontend. This ended up being really helpful for displaying arbitrarily many trials to the user and updating various parts of the UI with each action the user performs. Our group agreed to use React for this project because some group members had little experience with it and wanted to learn more web technologies. We created a data flow to preserve the form data across multiple submissions of the experiment and to collect data from each trial. React’s philosophy of updating state by replacing objects rather than mutating them inspired our design for persisting individual data points generated in each trial in our database.
+- __Firebase Realtime Database__: Firebase Realtime Database is a free to use NoSQL cloud database. We downloaded the keys and used the Firebase API in our React code to upload the results of the survey to the database. NoSQL and JSON complement each other very nicely so we were able to store our survey results as an object in the React state and then insert that directly into the real time database. When we were ready to analyze our data, we exported the database as a JSON file.
+- __Firebase Hosting__: We used Google’s Firebase Hosting platform to host our React application. Firebase Once we built the React app with the npm run build command we were able to use the Firebase command line tool to upload the optimized production version of the React app. Firebase then publishes the app to a custom URL based on our project name. For this assignment, it provided us with the custom URL: https://cs573-a3.web.app/.
+- __Demographics__: We designed a form to collect demographic data on participants’ visualization expertise, and we designed our database structure to store these records with each data submission. This involved learning how to use forms in Angular and managing data between components. We used this data to search for correlations between experience and accuracy within our results.
+
+## Design Achievements
+- __Spirals__: The spiral barcharts are a design achievement because they are a more complicated type of chart and getting them to look like spirals required some work. They are made by drawing a “path” on the svg that is a spiral, placing bars at even intervals along the path with one corner touching the path, and rotating the bars to align better with the curve. The spiral barcharts had to have more data points than the other chart types in order to look like spirals. For example, a spiral barchart with only 10 data points looked more like a jumble of randomly placed/oriented bars than a spiral. With 14 bars, the spiral barcharts looked like spirals, and with 17, they looked more presentable. 17 bars was also the maximum we could make without the random data generation taking too long, so this is the number of bars we chose to include. 
+- __We doodled our faces!__ Another design achievement is the set of drawings of us on the Welcome page of the experiment app. They make the Welcome page much more visually appealing! They also make the app more personal, which is useful when all of the people participating in the experiment are people we know.
+- __Styled with Foundation__: We styled the frontend using [Foundation](https://get.foundation/sites). Nobody in the group had previous experience with this styling library, but we wanted to try something new. We successfully used it to give our site a modern look with a consistent feel.
+- __Demographic questions__: The demographic questions are an extra element of experiment design that adds to the kind of results we can analyze. They enabled us to look not only at how the vis-es themselves influence perceptions, but also how different experience and exposure might affect people’s perceptions. They are also a design achievement because we added a tab on the app for the “survey” where participants are asked the demographic questions (familiarity with vis, occupation/field, education level, and statistics experience). 
+
+
+## Sources
+### React
+1. Primary Tutorial: https://reactjs.org/tutorial/tutorial.html 
+2. `componentDidAct()` React hook for D3: https://blog.logrocket.com/data-visualization-in-react-using-react-d3-c35835af16d0/ 
+3. React Forms: https://reactjs.org/docs/forms.html 
+### Firebase
+4. Firebase Realtime Database + React: https://www.youtube.com/watch?v=0pC8dEqSKkc&ab_channel=AVDojo
+5. How to Deploy a React App with Firebase Hosting: https://medium.com/swlh/how-to-deploy-a-react-app-with-firebase-hosting-98063c5bf425
+6. Creating a Production Build in React: https://create-react-app.dev/docs/production-build/
+### Data Visualizations
+7. Condegram (Spiral histogram): https://observablehq.com/@sawyerclick/condegram 
+8. Condegram Spiral Plot: https://bl.ocks.org/arpitnarechania/027e163073864ef2ac4ceb5c2c0bf616
+9. Basic barplot in d3.js: https://www.d3-graph-gallery.com/graph/barplot_basic.html 
+10. Pie Chart: https://www.d3-graph-gallery.com/pie.html 
+11. How to shuffle an array using Javascript: https://www.geeksforgeeks.org/how-to-shuffle-an-array-using-javascript/
+### Foundation
+12. Foundations Sites: https://get.foundation/sites 
+13. Foundations blog template we used as a reference: https://get.foundation/templates-previews-sites-f6-xy-grid/blog-simple.html 
+### Other
+14. Philosophy and Physics Performance on the GRE: https://www.wcu.edu/WebFiles/PDFs/PhilosophyPerformanceGRE.pdf
+
