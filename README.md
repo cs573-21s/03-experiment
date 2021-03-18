@@ -13,7 +13,7 @@ Experiment
 Link to Experiment: https://jhyuen.github.io/03-experiment
 
 ## Error Barchart with 95% CIs
-![Percent Error](img/PercentError.png)
+![Log Error](img/logError.png)
 
 ## Reference Charts
 ![Cleveland & McGill](img/Cleveland&McGill.png)
