@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>CS573 a3</title>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
+  <style>
+    body {
+      margin: 0px; 
+      width: 100vw; 
+      height: 100vh;
+    }
+
+    .svg-container {
+      display: inline-block;
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      vertical-align: top;
+      overflow: hidden;
+    }
+
+    .svg-content {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+  </style>
+</head>
+<body>
+    <div id="container" class="svg-container">
+    </div>
+
+    <script>
+        console.log(d3);
+
+        var margin = { top: 450, right: 0, bottom: 0, left: 350 },
+            width = 1000 - margin.left - margin.right,
+            height = 1000 - margin.top - margin.bottom,
+            innerRadius = 100,
+            outerRadius = Math.min(width, height) / 2;
+
+        var svg = d3.select('div#container').append('svg')
+            .attr('viewBox', '0 0 1920 1080')
+            .attr('preserveAspectRatio', 'xMinYMin meet')
+            .classed('svg-content', true)
+
+        function generateDataset() {
+            //choose size of data set between 5-10
+            let datasetCount = Math.floor(Math.random() * 6) + 5; 
+
+            //choose two random data points
+            let chosenPoint1 = Math.floor(Math.random() * datasetCount);
+            let chosenPoint2 = Math.floor(Math.random() * datasetCount);
+            while (chosenPoint1 == chosenPoint2) { //make sure we did not choose same one twice
+            chosenPoint2 = Math.floor(Math.random() * datasetCount);
+            }
+            
+            //create dataset
+            let myDataset = Array.from({length: datasetCount}, () => Math.floor(Math.random() * 101));
+
+            var letterData = [
+                {letter: "A", frequency: myDataset[0]},
+                {letter: "B", frequency: myDataset[1]},
+                {letter: "C", frequency: myDataset[2]},
+                {letter: "D", frequency: myDataset[3]},
+                {letter: "E", frequency: myDataset[4]},
+                {letter: "F", frequency: myDataset[5]},
+                {letter: "G", frequency: myDataset[6]},
+                {letter: "H", frequency: myDataset[7]},
+                {letter: "I", frequency: myDataset[8]},
+                {letter: "J", frequency: myDataset[9]}
+            ];
+
+            letterData.length = datasetCount; //Reduce array to correct size
+
+            //create struct
+            var data = {
+            mark1: chosenPoint1,
+            mark2: chosenPoint2,
+            dataset: letterData
+            };
+
+            return data;
+        }   
+
+        function generateCircularBarplot(data, mark1, mark2) {
+
+            console.log(data)
+
+            // Scales
+            var x = d3.scaleBand()
+                .range([0, 2 * Math.PI])    // X axis goes from 0 to 2pi = all around the circle. If I stop at 1Pi, it will be around a half circle
+                .domain(data.map(function(d) { return d.letter; })); // The domain of the X axis is the list of states.
+            var y = d3.scaleRadial()
+                .range([innerRadius, outerRadius])   // Domain will be define later.
+                .domain([0, 100]); // Domain of Y is from 0 to the max seen in the data
+
+            // Add the bars
+            svg.append("g")
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+            .selectAll("path")
+            .data(data)
+            .enter()
+            .append("path")
+                .attr("fill", "black")
+                .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+                    .innerRadius(innerRadius)
+                    .outerRadius(function(d) { 
+                        console.log(d);
+                        return y(d['frequency']); })
+                    .startAngle(function(d) { return x(d.letter); })
+                    .endAngle(function(d) { return x(d.letter) + x.bandwidth(); })
+                    .padAngle(0.01)
+                    .padRadius(innerRadius))
+
+            // Add the labels
+            svg.append("g")
+                .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+                .selectAll("g")
+                .data(data)
+                .enter()
+                .append("g")
+                .attr("text-anchor", function(d) { return (x(d.letter) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+                .attr("transform", function(d) { return "rotate(" + ((x(d.letter) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(d['frequency'])+10) + ",0)"; })
+                .append("text")
+                .text(function(d){return(d.letter)})
+                .attr("transform", function(d) { return (x(d.letter) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+                .style("font-size", "11px")
+                .attr("alignment-baseline", "middle")
+        }
+
+        // Produce graph
+        let data = generateDataset();
+        console.log("mark1: " + data.mark1 + " mark2: " + data.mark2 + " dataset: " + data.dataset);
+        generateCircularBarplot(data.dataset, data.mark1, data.mark2);
+
+    </script>
+</body>
+</html>
