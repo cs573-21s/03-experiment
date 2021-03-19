@@ -51,8 +51,8 @@ the values not involved in the users' judgments are randomly generated from 20 t
 
 ## Design Achievement
 - On the web page, if the user accidentally clicks the Next button without entering a value, their page will send out an alert box to remind the user to enter the answer and null data can be avoided to send to server.<br>
-<img src="img/alert.png" width="300"><br><img src="img/progressbar.png" width="300"><br>
 In addition, at the top of the page, users can see which page they are currently on and a progress bar, allowing users to know their progress.<br>
+<img src="img/alert.png" width="300"><br><img src="img/progressbar.png" width="300"><br>
 
 
 
