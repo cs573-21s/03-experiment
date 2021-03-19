@@ -25,11 +25,29 @@ const ChartSchema = new mongoose.Schema({
         max: 100
     }
 })
+const ExtrapartSchema = new mongoose.Schema({
+    visType: {
+        type: String
+    },
+    reportedPercent: {
+        type: Number,
+        min: 0,
+        max: 100
+    },
+    truePercent: {
+        type: Number,
+        min: 0,
+        max: 100
+    }
+})
 //创建集合
 const Chart = mongoose.model('Chart', ChartSchema);
+const Extrapart = mongoose.model('Extrapart', ExtrapartSchema);
 
-// const chart1 = new Chart({
-//     age: 24
+// const chart1 = new Extrapart({
+//     visType: "asd",
+//     reportedPercent: 50,
+//     truePercent: 10
 // })
 
 // chart1.save();
@@ -41,25 +59,29 @@ app.on('request', function (req, res) {
 
     const method = req.method;
     let { pathname } = url.parse(req.url, true);
+    var filename;
 
     if (method == 'GET') {
         if (pathname == '/') {
-            pathname = '/index.html'
+            pathname = 'index.html';
+        } else if (pathname == '/extra') {
+            pathname = 'index2.html';
         }
+        // var filename = pathname;
         let staticPath = path.resolve(__dirname, 'public');
-
+        // console.log(staticPath)
         let filePath = path.join(staticPath, pathname);
 
-        fs.readFile(filePath, function (err, data) {
-            if (err) {
-                console.log(err);
 
+        fs.readFile(filePath, 'utf8', function (err, data) {
+            if (err) {
+                console.log(err)
             } else {
-                console.log('ok');
                 res.write(data);
                 res.end();
             }
-        })
+        });
+
     } else if (method == 'POST') {
         if (pathname == '/') {
             let formdata = '';
@@ -73,6 +95,20 @@ app.on('request', function (req, res) {
             req.on('end', async () => {
                 let chart = querystring.parse(formdata);
                 await Chart.create(chart)
+            })
+            res.end();
+        } else if (pathname == '/extra') {
+            let formdata = '';
+            req.on('data', parms => {
+                formdata += parms;
+                console.log(parms)
+            })
+
+            console.log(formdata)
+
+            req.on('end', async () => {
+                let chart = querystring.parse(formdata);
+                await Extrapart.create(chart)
             })
             res.end();
         }
