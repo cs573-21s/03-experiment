@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script type="text/javascript" src="extra.js"></script>
+    <link rel="stylesheet" href="extra.css">
+</head>
+
+<body>
+    <div class="progress">
+        <div>Test <span id="page"></span>/60</div>
+        <progress value="25" max="70"></progress>
+    </div>
+
+    <div class="instruc">
+        <p>In this experiment,</p>
+        <p>you are asked to judge</p>
+        <p>what is the percent of a smaller value to a larger value in several charts.</p>
+        <br>
+        <p>It is better to brower this page on computer. It will take you around 15 minutes.</p>
+        <br>
+        <p>We won't record any information from you except your answers.</p>
+        <p>Click the 'agree' button to begin.</p>
+        <br>
+        <p>Thank you!</p>
+    </div>
+    <div class="submit_instruc">
+        <button id="disagree"><a href="https://www.google.com/">DISAGREE</a></button>
+        <button id="agree">AGREE</button>
+    </div>
+    <div class="svg" id="svg"></div>
+    <div class="ps">
+        <p>Two values are marked with dots</p>
+        <p>What do you think the percent of the smaller value to the larger value?</p>
+        <p>Please put your answer below</p>
+        <p>e.g.If you think the smaller one is exactly a half of the bigger one.</p>
+        <p>Please input '50'</p>
+    </div>
+
+    <div class="submit">
+        <form id="form1" method="POST" target="iframe" action='/extra'>
+            <input id="truePercent" type="hidden" id="test" name="truePercent">
+            <input id="visType" type="hidden" id="test" name="visType">
+            <input id='reportedPercent' name="reportedPercent" type="number" max="100" min="0" placeholder="INPUT HERE"
+                autocomplete="off">
+            <input id="hiddenText" type="text" style="display:none" />
+            <button type="button" id="Next">Next</button>
+        </form>
+        <iframe id="iframe" name="iframe" style="display:none;"></iframe>
+    </div>
+    <div class="Thanks">
+        <p>Thanks!</p>
+        <button><a href="https://www.google.com/">Close</a></button>
+    </div>
+</body>
+<script>
+    var count = 0;
+    var rightanswer;
+    var visType;
+    var progress = document.getElementsByTagName('progress')[0];
+    var span_page = document.getElementById('page');
+    var div_progress = document.getElementsByClassName('progress')[0];
+
+    var button_agree = document.getElementById('agree');
+    var div_instruc = document.getElementsByClassName('instruc')[0];
+    var div_submit_instruc = document.getElementsByClassName('submit_instruc')[0];
+
+    var divSvg = document.getElementById('svg');
+    var div_ps = document.getElementsByClassName('ps')[0];
+    //This is part 1 submit button
+    var div_submit = document.getElementsByClassName('submit')[0];
+    var button = document.getElementById('Next');
+
+    var form1 = document.getElementById('form1');
+    var truePercent = document.getElementById('truePercent');
+    var type = document.getElementById('visType');
+    var reportedPercent = document.getElementById('reportedPercent');
+
+    var div_Thanks = document.getElementsByClassName('Thanks')[0];
+
+    //create data for Type1 - type5
+    var dataForChart = [];
+    for (let i = 0; i < 20; i++) {
+        dataForChart.push([1, 2, 3])
+    }
+
+    button_agree.addEventListener('click', function () {
+        div_instruc.style.display = 'none';
+        div_submit_instruc.style.display = 'none';
+
+        div_progress.style.display = 'block';
+        divSvg.style.display = 'block';
+        div_ps.style.display = 'block';
+        div_submit.style.display = 'block';
+
+        let randomData = d3.randomInt(0, dataForChart.length)();
+        let vbn = dataForChart[randomData];
+        let randomDraw = d3.randomInt(0, vbn.length)();
+        if (vbn[randomDraw] == 1) {
+            chart8();
+        } else if (vbn[randomDraw] == 2) {
+            chart9();
+        } else if (vbn[randomDraw] == 3) {
+            chart10();
+        }
+        vbn.splice(randomDraw, 1);
+        if (vbn.length == 0) {
+            dataForChart.splice(randomData, 1)
+        }
+
+        count++;
+        progress.value = count;
+        span_page.innerHTML = count;
+        truePercent.value = rightanswer;
+        type.value = visType;
+        console.log(visType);
+        console.log(rightanswer);
+    })
+
+    button.addEventListener('click', function () {
+        if (reportedPercent.value == '') {
+            alert('You must input a number')
+        } else {
+            divSvg.innerHTML = '';
+            count++;
+            progress.value = count;
+            span_page.innerHTML = count;
+
+            form1.submit();
+            form1.reset();
+
+            if (dataForChart.length == 0) {
+                divSvg.style.display = 'none';
+                div_ps.style.display = 'none';
+                div_submit.style.display = 'none';
+
+                div_progress.style.display = 'none';
+                div_Thanks.style.display = 'block';
+
+                count--;
+                progress.value = count;
+                span_page.innerHTML = count;
+            } else {
+                let randomData = d3.randomInt(0, dataForChart.length)();
+                let vbn = dataForChart[randomData];
+                let randomDraw = d3.randomInt(0, vbn.length)();
+                if (vbn[randomDraw] == 1) {
+                    chart8();
+                } else if (vbn[randomDraw] == 2) {
+                    chart9();
+                } else if (vbn[randomDraw] == 3) {
+                    chart10();
+                }
+                vbn.splice(randomDraw, 1);
+                if (vbn.length == 0) {
+                    dataForChart.splice(randomData, 1)
+                }
+                truePercent.value = rightanswer;
+                type.value = visType;
+                console.log(visType);
+                console.log(rightanswer);
+            }
+        }
+    })
+</script>
+
+</html>
