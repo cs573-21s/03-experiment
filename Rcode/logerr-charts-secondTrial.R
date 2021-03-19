@@ -1,4 +1,4 @@
-data = charts
+data = charts.secondtrial
 library(ggplot2) 
 data$truePercent <- data$truePercent*100
 
