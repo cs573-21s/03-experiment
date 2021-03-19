@@ -1,13 +1,49 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
-
-
-<style>
-</style>
-
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+</head>
 <body>
-  <h1> Experiment </h1>
+  <div id="start_page" style="text-align:center;align-self:center;font-family:sans-serif;font-size:30px;">
+    <p>In this experiment, you will be asked to determine what percentage a smaller value is to a larger value.</p>
+    <p>There will be three types of visualizations with different amounts of randomized data.</p>
+    <p>There is no time limit.</p>
+    <p>We will not record any information except for your response.</p>
+    <p>When you are ready, click Start to begin.</p>
+    <button id="start">Start</button>
+  </div>
+  <div id="counter_div" style="display: none;text-align:center;align-self:center;">
+    <p id="counter"></p>
+  </div>
+  <div id="response_field_div" style="display: none;align-self:left;font-family:sans-serif">
+    <input id="response_field"></input>
+    <button id="next">Next</button>
+    <p>Please enter the percent value as an integer (1-100) (without percent sign).</p>
+    <div id="circular_caption" style="display: inline;">
+      <h3>Instructions:</h3>
+      <p>Two regions are marked with dots.</p>
+      <p>Estimate what fraction (AS A PERCENT) the smaller region is to the larger region.</p>
+      <p>E.g. if smaller region is 50% the size of bigger region, answer with 50.</p>
+    </div>
+    <div id="heatmap_caption" style="display: none;">
+      <h3>Instructions:</h3>
+      <p>Two regions are marked with dots.</p>
+      <p>Estimate what fraction (AS A PERCENT) the lighter region is light to the darker region in terms of darkness.</p>
+      <p>E.g. if lighter region is 50% as dark than darker region, answer with 50.</p>
+    </div>
+    <div id="wordmap_caption"style="display: none;">
+      <h3>Instructions:</h3>
+      <p>Two words are marked with dots.</p>
+      <p>Estimate what fraction (AS A PERCENT) the smaller word is to the bigger word in terms of size.</p>
+      <p>E.g. if smaller word is 50% as the size of bigger word, answer with 50.</p>
+    </div>
+  </div>
+  <div></div>
+  <div id="viz_div" style="display: none;text-align:center;align-self:center;"></div>
+  <div id="thank_you" style="display: none;text-align:center;align-self:center;">
+    <h1 style="font-family:sans-serif;">Your response has been recorded. Thank you!</h1>
+  </div>
+  <script src="script.js"></script>
 </body>
-
-<script>
-  console.log(d3); // test if d3 is loaded
-</script>
