@@ -7,16 +7,27 @@ There are two parts in our assignment.
 As the experiments in Cleveland paper are so classical and fundamental in the history of data visualization, our group replicated experiments in Cleveland paper first. Bar charts, pie charts, stacked bar cahrts are included in our survey.  
    *Github page: https://zihao777.github.io/03-experiment/*  
    *Website: http://47.242.141.68:8000*  
-- Radial experiemtn   
+- Radial experiment   
    As an extra part, we want to figure out whether people have a good quantitative cognition for radial bar chart. In general speaking, we designed 3 types of radial bar chart. Each one has 3 bars, 5 bars, 7 bars.  
   *Github page: https://zihao777.github.io/03-experiment/extra/*   
   *Website:  http://47.242.141.68:8000/extra*    
   
-To collect the data, we rent a server to deploy our page. Node.js is used to response, required on server, and connect database. The database is managed by MongoDB.
+To collect the data, we rent a server to deploy our page. Node.js is used to response, required on server, and connect database. The database is managed by MongoDB. All charts are drawn by D3.js.
 
 Experiment
 ---
+### Classical experiment
+|Name|Type|
+|-|-|
+|TYPE1|![IMG](img/TYPE1.png)|
+|TYPE1|-|
+|TYPE1|-|
+|TYPE1|-|
+|TYPE1|-|
+|TYPE1|-|
+|TYPE1|-|
 
+### Radial experiment
 
 ## Technical achievenment
 
