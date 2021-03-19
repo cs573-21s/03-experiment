@@ -23,7 +23,7 @@ As illustrated in Cleveland paper, for the grouped bar chart, the dots appeared 
 The values involved in the user's judgments were show below:   
 <img src="img/equation.png" width="100">   
 the values not involved in the users' judgments are randomly generated from 0 to 100. All values are shown in a same scale on the page.     
-
+<br>
 |Name|Type|Name|Type|
 |-|-|-|-|-|-|
 |TYPE1|<img src="img/TYPE1.png" width="200">|TYPE2|<img src="img/TYPE2.png" width="200">|TYPE3|<img src="img/TYPE3.png" width="200">|
