@@ -2,7 +2,7 @@ Assignment 3 - Replicating a Classic Experiment
 ===
 Introduction
 ---
-There are two parts in our assignment.
+There are two experiments in our assignment.
 - Classical experiment   
 As the experiments in Cleveland paper are so classical and fundamental in the history of data visualization, our group replicated experiments in Cleveland paper first. Bar charts, pie charts, stacked bar cahrts are included in our survey.  
    *Github page: https://zihao777.github.io/03-experiment/*  
