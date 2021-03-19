@@ -17,15 +17,13 @@ To collect the data, we rent a server to deploy our page. Node.js is used to res
 Experiment
 ---
 ### Classical experiment
-|Name|Type|
-|-|-|
-|TYPE1|<img src="img/TYPE1.png" width="200">|
-|TYPE2|![IMG](img/TYPE2.png)|
-|TYPE3|![IMG](img/TYPE3.png)|
-|TYPE4|![IMG](img/TYPE4.png)|
-|TYPE5|![IMG](img/TYPE5.png)|
-|TYPE6|![IMG](img/TYPE6.png)|
-|TYPE7|![IMG](img/TYPE7.png)|
+|Name|Type|Name|Type|
+|-|-|-|-|
+|TYPE1|<img src="img/TYPE1.png" width="200">|TYPE5|<img src="img/TYPE5.png" width="200">|
+|TYPE2|<img src="img/TYPE2.png" width="200">|TYPE6|<img src="img/TYPE6.png" width="200">|
+|TYPE3|<img src="img/TYPE3.png" width="200">|TYPE7|<img src="img/TYPE7.png" width="200">|
+|TYPE4|<img src="img/TYPE4.png" width="200">|||
+
 
 ### Radial experiment
 
