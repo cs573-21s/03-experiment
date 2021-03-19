@@ -1,8 +1,6 @@
-,x_1,x_2,x_3,compare
-1,77,82,22,False
-2,17,84,57,False
-3,22,47,0,True
-4,66,64,57,False
-5,91,81,35,False
-6,96,10,18,True
-7,31,94,77,False
+,data_id,x_1,x_2,x_3,compare
+1,1,41,53,46,True
+2,2,98,34,85,False
+3,3,32,49,88,False
+4,4,39,92,55,False
+5,5,7,92,12,True
