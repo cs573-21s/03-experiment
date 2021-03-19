@@ -45,16 +45,52 @@ The values not involved in the users' judgments are randomly generated from 20 t
 |-|-|-|-|-|-|
 |TYPE8|<img src="img/TYPE8.png" width="200">|TYPE9|<img src="img/TYPE9.png" width="200">|TYPE10|<img src="img/TYPE10.png" width="200">|
 
+Analysis
+---
 
+### Error Trial 1
+In our experiment we were asked to find how different charts could be interpreted by different users. As we have learned in our classroom experience, pie charts are not great tools for representing data. Much to our surprise, we found that the log error was negative for the pie chart. This meant that many of the users input values that were very close to the true percentage. While pie charts had the greatest distribution of error, it was still the most well-interpreted chart compared to bar and stacked.<br>
+
+<img src="img/logerr.png" width="500"><br>
+
+- As you can see in the image above, most users had a very difficult time reading stacked bar charts with most error values between 2.5 and 2.75.<br>
+- The pie chart error stretches from about 1.75, partially overlaps with the typical bar chart, and ends at just about 2.11. <br>
+- The bar chart had the smallest range of error, as expected, however the average error was a bit over 2, while pie charts were found to be most successful with average error under 2. <br>
+Because of the questionable data we found in this trial, we decided to pursue a second trial to compare.
+
+### Error Trial 2
+In our second trial
+
+<img src="chartsSecondTrial.png" width="500">
+
+### Radial Analysis
+
+<img src="img/logerr-extraPart.png" width="500">
+
+### Overall 
+
+<img src="img/charts-secondtrial-extrapart-combined.png" width="500">
+
+## Normal Distribution
+
+<img src="img/normal_dist_reported_percent.png" width="500"><br>
+<img src="img/normal_dist_true_percent.png" width="500"><br>
+<img src="img/normdist-extra-reported-answers.png" width="500"><br>
+<img src="img/normdist-extra-true.png" width="500"><br>
+
+Achevements
+---
 
 ## Technical Achievenment
+- After recreating the classical experiment, we decided to pursue a third part involving radial charts. This type of graph is was not included in the classical experiment but is becoming an increasingly more popular way to represent data. We created 3 types of this chart, 3 bars, 5 bars, 7 bars, and wanted to determine if the number of bars influenced how accurate the reported percent was. This was an interesting component because creating a radial graph with d3 was a lot more complicated than anticipated causing multiple bugs before it came together.<br>
+|TYPE8|<img src="img/TYPE8.png" width="200">|TYPE9|<img src="img/TYPE9.png" width="200">|TYPE10|<img src="img/TYPE10.png" width="200">|
 
 ## Design Achievement
 - On the web page, if the user accidentally clicks the Next button without entering a value, their page will send out an alert box to remind the user to enter the answer and null data can be avoided to send to server. In addition, at the top of the page, users can see which page they are currently on and a progress bar, allowing users to know their progress.<br>
 <img src="img/alert.png" width="300"><br><img src="img/progressbar.png" width="300"><br>
 
-
-
+- As a team we attempted a second design achievement for this project, how would using a dark gradient background change how the charts are interpreted? While we did not have enough time to collect sufficient data to test this achievement, the code is included in docs/pt3.<br>
+<img src="img/design-attempt.PNG" width="300"><br>
 
 
 
