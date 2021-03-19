@@ -20,12 +20,12 @@ Experiment
 |Name|Type|
 |-|-|
 |TYPE1|![IMG](img/TYPE1.png)|
-|TYPE1|-|
-|TYPE1|-|
-|TYPE1|-|
-|TYPE1|-|
-|TYPE1|-|
-|TYPE1|-|
+|TYPE2|![IMG](img/TYPE2.png)|
+|TYPE3|![IMG](img/TYPE3.png)|
+|TYPE4|![IMG](img/TYPE4.png)|
+|TYPE5|![IMG](img/TYPE5.png)|
+|TYPE6|![IMG](img/TYPE6.png)|
+|TYPE7|![IMG](img/TYPE7.png)|
 
 ### Radial experiment
 
