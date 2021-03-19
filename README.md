@@ -25,7 +25,7 @@ For our experiment, we compared bar charts, pie charts, and line charts. We adde
 ### Line Chart with Transition
 ![line chart with transition](img/line_ani.png)
 
-Experiment Description
+Experiment Results
 ---
 
 ### Technical Achievements
