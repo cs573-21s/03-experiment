@@ -8,7 +8,28 @@ Stephanie Strom<br>**
 Experiment Description
 ---
 
-![cleveland bar chart](img/cleveland-bar.png)
+![experimentUI](img/expermintUI.png)
+
+For our experiment, we compared bar charts, pie charts, and line charts. We added the additional experimental condition of comparing static charts to charts that transition upon opening. Each trial consisted of 24 charts, each of the six chart types appeared four times in random order. Each chart was a visualization of 10 random data points. For the transitioning charts, the charts first appear with all data points as equal and then transition to their random value. We thought this was an interesting question to see if there was any difference in accuracy with a transition on opening. Pictured below are screenshots of the six different charts.
+
+![bar chart](img/bar.png)
+![pie chart](img/pie.png)
+![line chart](img/line.png)
+![bar chart with transition](img/bar_ani.png)
+![pie chart with transition](img/pie_ani.png)
+![line chart with transition](img/line_ani.png)
+
+
+### Technical Achievements
+- 
+
+### Design Achievements
+- 
+
+### References
+- [https://www.d3-graph-gallery.com/graph/pie_basic.html](https://www.d3-graph-gallery.com/graph/pie_basic.html)
+- [https://www.tutorialsteacher.com/d3js/create-pie-chart-using-d3js](https://www.tutorialsteacher.com/d3js/create-pie-chart-using-d3js)
+- 
 
 
 ## General Requirements
