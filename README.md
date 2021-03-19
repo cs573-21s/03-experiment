@@ -10,7 +10,8 @@ As the experiments in Cleveland paper are so classical and fundamental in the hi
 - Radial experiemtn   
    As an extra part, we want to figure out whether people have a good quantitative cognition for radial bar chart. In general speaking, we designed 3 types of radial bar chart. Each one has 3 bars, 5 bars, 7 bars.  
   *Github page: https://zihao777.github.io/03-experiment/extra/*   
-  *Website:  http://47.242.141.68:8000/extra*   
+  *Website:  http://47.242.141.68:8000/extra*    
+  
 To collect the data, we rent a server to deploy our page. Node.js is used to response, required on server, and connect database. The database is managed by MongoDB.
 
 Experiment
