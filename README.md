@@ -19,7 +19,7 @@ Experiment
 ### Classical experiment
 |Name|Type|
 |-|-|
-|TYPE1|![IMG](img/TYPE1.png)|
+|TYPE1|<img src="img/TYPE1.png" width="200">|
 |TYPE2|![IMG](img/TYPE2.png)|
 |TYPE3|![IMG](img/TYPE3.png)|
 |TYPE4|![IMG](img/TYPE4.png)|
