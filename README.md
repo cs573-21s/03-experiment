@@ -19,13 +19,13 @@ Experiment
 ### Classical experiment
 Classical experiment is consisted with two parts: position-length experiment and position-angle experiment. There are 70 trails and the trails are in random order. In each graph, two bars or areas are marked with a black dot and users need to judge which what percent the smaller to big one. The first page is an instruction page that user can agree us to collect data form them or disagree.
      
-In part-one, users were shown the five types of graphs which are named TYPE1, TYPE2, TYPE3, TYPE4, TYPE5 shown in the below table. Ten group of data are generated for each type of graph, so part-one has 50 graphs. Each graph is either a bar chart or stacked bar chart. 
+- In part-one, users were shown the five types of graphs which are named TYPE1, TYPE2, TYPE3, TYPE4, TYPE5 shown in the below table. Ten group of data are generated for each type of graph, so part-one has 50 graphs. Each graph is either a bar chart or stacked bar chart. 
 As illustrated in Cleveland paper, for the grouped bar chart, the dots appeared either in the second and third bars in second group or in the second bars of the two groups. For the stacked bar chart, dots appeared either in the top divisions of two bars or top two divisions of left bar or bottom divisions of two bars.   
 The values involved in the user's judgments were show below:   
-<img src="img/equation1.png" width="100">   
+<img src="img/equation1.png" width="400">   
 the values not involved in the users' judgments are randomly generated from 0 to 100. All values are shown in a same scale on the page. 
     
-In part-two, users were shown the two types of graphs which are named TYPE6, TYPE7 shown in the below table. Same with part-one, ten group of data are generated for each type of graph, so part-two has 20 graphs.   
+- In part-two, users were shown the two types of graphs which are named TYPE6, TYPE7 shown in the below table. Same with part-one, ten group of data are generated for each type of graph, so part-two has 20 graphs.   
 In this part, each group of  values is generated randomly and can be sumed up to 100. They also ,eet the three requirments in Cleveland paper: The minimum value had to be greater than 3; the maximum value had to be less than 39 and all differences between values in a group had to be greater than 0.1.
 |Name|Type|Name|Type|Name|Type|
 |----|----|----|----|----|----|
