@@ -26,6 +26,10 @@ Experiment
 
 
 ### Radial experiment
+|Name|Type|Name|Type|Name|Type|
+|-|-|-|-|-|-|
+|TYPE8|<img src="img/TYPE8.png" width="200">|TYPE9|<img src="img/TYPE9.png" width="200">|TYPE10|<img src="img/TYPE10.png" width="200">|
+
 
 ## Technical achievenment
 
