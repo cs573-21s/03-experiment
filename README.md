@@ -28,12 +28,9 @@ For our experiment, we compared bar charts, pie charts, and line charts. We adde
 Experiment Results
 ---
  Here are the Hypothesis we wanted to test:
-    - Does line chart facilitate the interpretation of data more effectively than bar and pie charts?
-    - Does the use of animation improve the user performance while interpreting data?
+  * Does line chart facilitate the interpretation of data more effectively than bar and pie charts?
+  * Does the use of animation improve the user performance while interpreting data?
 
- Here are the Hypothesis we wanted to test:
-    - Does line chart facilitate the interpretation of data more effectively than bar and pie charts?
-    - Does the use of animation improve the user performance while interpreting data?
 
 Finally we analyzed the charts using bootstrapped 96\% confidence intervals and the chart from the analysis is provided below:
 ![Aalysis](img/confidenceintervals.png)
