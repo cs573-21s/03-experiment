@@ -87,11 +87,21 @@ Achevements
 
 ### Technical Achievenment
 - After recreating the classical experiment, we decided to pursue a third part involving radial charts. This type of graph is was not included in the classical experiment but is becoming an increasingly more popular way to represent data. We created 3 types of this chart, 3 bars, 5 bars, 7 bars, and wanted to determine if the number of bars influenced how accurate the reported percent was. This was an interesting component because creating a radial graph with d3 was a lot more complicated than anticipated causing multiple bugs before it came together.<br>
-|TYPE8|<img src="img/TYPE8.png" width="200">|TYPE9|<img src="img/TYPE9.png" width="200">|TYPE10|<img src="img/TYPE10.png" width="200">|
+|TYPE8|<img src="img/TYPE8.png" width="200">|TYPE9|<img src="img/TYPE9.png" width="200">|TYPE10|<img src="img/TYPE10.png" width="200">
+
+- We did this experiment twice! <br>
 
 ### Design Achievement
-- On the web page, if the user accidentally clicks the Next button without entering a value, their page will send out an alert box to remind the user to enter the answer and null data can be avoided to send to server. In addition, at the top of the page, users can see which page they are currently on and a progress bar, allowing users to know their progress.<br>
-<img src="img/alert.png" width="300"><br><img src="img/progressbar.png" width="300">
+- On the web page, if the user accidentally clicks the Next button without entering a value, their page will send out an alert box to remind the user to enter the answer and null data can be avoided to send to server. <br>
+<img src="img/alert.png" width="300"><br>
+
+- In addition, at the top of the page, users can see which page they are currently on and a progress bar, allowing users to know their progress.<br>
+<img src="img/progressbar.png" width="300"><br>
+
+- We would also like to recognize our input box as a design acheivement. While it makes it clear that the user must input an integer, this design makes it possible for the user to increase or decrease their response by a value of 1 much easier than if they had to type/delete/type/delete etc. <br>
+<img src="img/inputbar.png" width="300"><br>
+
+- Also, the thank you page is a design acheivement that indicates the end of the trial, giving the user closure that the survey is complete. Once finished, they click close and it takes them straight to a Google search bar! <br>
 
 - As a team we attempted a second design achievement for this project, how would using a dark gradient background change how the charts are interpreted? While we did not have enough time to collect sufficient data to test this achievement, the code is included in docs/pt3.<br>
 <img src="img/design-attempt.PNG" width="300"><br>
