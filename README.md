@@ -1,3 +1,5 @@
+Link: https://wtt102.github.io/03-experiment/
+
 Hypotheses
 ===
 The three vizualizations I used in this experiment were the circular bar plot (testing for angle), the heatmap (testing for saturation gradation perception), and the wordcloud (seeing if font size is discernible in a qualitative way). I generated the data for these experiments using a python script. There are a total of 20 different data tables, one corresponding to a single trial for a given vizualization type (includes 3 columns).
