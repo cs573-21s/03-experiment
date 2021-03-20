@@ -79,7 +79,7 @@ Our extra part for this experiment consisted of a smaller trial of just radial g
 - Perhaps if we had more time, we would collect more data from more users to more accurately narrow down these results and report any differences in the findings.<br>
 
 ### Overall 
-Based on our data from two trials, we did not find that pie charts were the hardest graph to read. Ultimately, it appears to us that to accurately read the values from a chart depends may simply depend on the users cognitive ability. While our data suggests pie and bar charts over radial and stacked, we may find different results if we attempted a third trial with new users. Overall, bar charts had the lowest average error, but the pie chart performed much better compared to the results of the Cleveland experiment.
+Based on our data from two trials, we did not find that pie charts were the hardest graph to read. Ultimately, it appears to us that to accurately read the values from a chart may simply depend on the users cognitive ability. While our data suggests pie and bar charts over radial and stacked, we may find different results if we attempted a third trial with new users. Overall, bar charts had the lowest average error, but the pie chart performed much better compared to the results of the Cleveland experiment.
 <img src="img/charts-secondtrial-extrapart-combined.png" width="500">
 
 Achevements
