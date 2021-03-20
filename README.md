@@ -31,23 +31,30 @@ Experiment Results
   * Does line chart facilitate the interpretation of data more effectively than bar and pie charts?
   * Does the use of animation improve the user performance while interpreting data?
 
+### Ranking the Charts
+![line chart](img/summary_ranking.png)
 
-Finally we analyzed the charts using bootstrapped 96\% confidence intervals and the chart from the analysis is provided below:
+
+From our dataset, we were able to observe something rather interesting, the average error (|judged percent - true percent|) was lower on the bar condition than the bar with animation condition. However, when we calculated the log base 2 of the error using the formula that Cleveland and McGill used in their original experiment to measure accuracy. The bar with Animation had a higher accuracy than the bar condition. This was an interesting finding that could indicate how accuracy is sensitive to readings that are closer to 0. 
+
+Finally, we analyzed the charts using bootstrapped 95\% confidence intervals, and the chart from the analysis is below:
 ![Aalysis](img/confidenceintervals.png)
 
 
-Analyzing the chart we can see that for the line and bar chart the performance of the users' increased with the animate condition but it regressed further in the pie chart condition. So it does can enhance performance for charts where the users already perform at a higher level. Analyzing line vs. line with animation is indicative of improving performance but the difference is not significant. In the contenxt of this experiment, the static line chart in is not a good alternative to bar charts however if we must utilize line charts for some reason then animating them will make the performance of users using bar, bar with animation and line with animation comparable. The chart also indicates that although there isn't significant difference between line, pie and pie with animation, using animation makes line chart significantly better than pie charts and pie chart with animations.
+Analyzing the chart shows that the users' performance increased with the animate condition for the line and bar chart but regressed in the pie chart condition. So it can enhance performance for charts where the users already perform at a higher level. Analyzing line vs. line with animation is indicative of improving performance, but the difference is not significant. In this experiment's context, the static line chart is not a good alternative to bar charts. However, if we must utilize line charts for some reason, then animating them will make users' performance using the bar, bar with animation and line with animation comparable. The chart also indicates that although there isn't a significant difference between line, pie, and pie with animation, animation makes line chart significantly better than pie charts and pie charts with animations.
 
 
 ### Technical Achievements
-- We deployed our experiment online and it can be accessed through the following link.
+- **Database Connection**: We deployed our experiment online and it can be accessed through the following link.
 [Link to the experiment](https://internal.assistments.org/LiveChart/experimentindex)
 The webpage is hosted on a server at WPI. 
 We are using Spring, the pages are hosted using JSP, the API is RESTful and the data is stored ina Postgres DB.
+- **No Redundancy**: The data collection stored the comparison values on the points as to limit the amount of redundant data. It also made it easier to calculate the size percentage between the two selected points.
 
 
 ### Design Achievements
 - **Transitions:** We used transitions on the bar, pie, and line charts as a unique condition to test. This also provided a coding challenge in d3.
+- **Simplistic UI**: The UI followed the simplistic design principles as to not influence the users in any fashion and pull away from the experiement. Only key requirements were highlighted for user understanding.
 
 ### References
 - [https://www.d3-graph-gallery.com/graph/pie_basic.html](https://www.d3-graph-gallery.com/graph/pie_basic.html)
