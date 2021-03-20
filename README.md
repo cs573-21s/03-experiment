@@ -34,6 +34,8 @@ Experiment Results
 
 Finally we analyzed the charts using bootstrapped 96\% confidence intervals and the chart from the analysis is provided below:
 ![Aalysis](img/confidenceintervals.png)
+
+
 Analyzing the chart we can see that for the line and bar chart the performance of the users' increased with the animate condition but it regressed further in the pie chart condition. So it does can enhance performance for charts where the users already perform at a higher level. Analyzing line vs. line with animation is indicative of improving performance but the difference is not significant. In the contenxt of this experiment, the static line chart in is not a good alternative to bar charts however if we must utilize line charts for some reason then animating them will make the performance of users using bar, bar with animation and line with animation comparable. The chart also indicates that although there isn't significant difference between line, pie and pie with animation, using animation makes line chart significantly better than pie charts and pie chart with animations.
 
 
