@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Study</title>
+  <link rel="stylesheet" href="styles.css">
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script>
+
+    window.addEventListener('load', async function() {
+      const experimentStats = await fetch('/api/v1/experiment/stats', {
+    		method: 'GET',
+    		headers: {
+    			'Content-Type': 'application/json'
+    		}
+    	}).then(resp => resp.json());
+    	console.log(experimentStats);
+
+			document.getElementById('numParticipants').textContent = experimentStats.participants;
+
+      const logErrorChartInfo = [
+        {
+          'chartType': 'pie',
+          'count': experimentStats.counts['pie'],
+          'confidenceIntervalsLogError': experimentStats.confidenceIntervalsLogErrors['pie'],
+          'meanLogError': experimentStats.meanLogErrors['pie'],
+          'meanRepsonseTimeMS': experimentStats.meanRepsonseTimeMS['pie'],
+        },
+        {
+          'chartType': 'bar',
+          'count': experimentStats.counts['bar'],
+          'confidenceIntervalsLogError': experimentStats.confidenceIntervalsLogErrors['bar'],
+          'meanLogError': experimentStats.meanLogErrors['bar'],
+          'meanRepsonseTimeMS': experimentStats.meanRepsonseTimeMS['bar'],
+        },
+        {
+          'chartType': 'circular',
+          'count': experimentStats.counts['circular'],
+          'confidenceIntervalsLogError': experimentStats.confidenceIntervalsLogErrors['circular'],
+          'meanLogError': experimentStats.meanLogErrors['circular'],
+          'meanRepsonseTimeMS': experimentStats.meanRepsonseTimeMS['circular'],
+        },
+        {
+          'chartType': 'stackedBar',
+          'count': experimentStats.counts['stackedBar'],
+          'confidenceIntervalsLogError': experimentStats.confidenceIntervalsLogErrors['stackedBar'],
+          'meanLogError': experimentStats.meanLogErrors['stackedBar'],
+          'meanRepsonseTimeMS': experimentStats.meanRepsonseTimeMS['stackedBar'],
+        },
+        {
+          'chartType': 'donut',
+          'count': experimentStats.counts['donut'],
+          'confidenceIntervalsLogError': experimentStats.confidenceIntervalsLogErrors['donut'],
+          'meanLogError': experimentStats.meanLogErrors['donut'],
+          'meanRepsonseTimeMS': experimentStats.meanRepsonseTimeMS['donut'],
+        }
+      ]
+
+      // sort by meanLogError
+      logErrorChartInfo.sort((a, b) => (a.meanLogError > b.meanLogError) ? 1 : -1);
+      resultChart(logErrorChartInfo);
+      
+			// timing
+			meanResponseTimeChart(logErrorChartInfo);
+			timingChart(experimentStats.responseTimeMS_overTime);
+    });
+
+    function resultChart(chartInfo) {
+      var margin = {top: 50, right: 20, bottom: 100, left: 100},
+          width = 960 - margin.left - margin.right,
+          height = 600 - margin.top - margin.bottom;
+
+      // console.log(chartInfo.map(d => d.chartType));
+      // set ranges
+      const yScale = d3.scaleOrdinal()
+        .domain(chartInfo.map(d => d.chartType))
+        .range([0, 100, 200, 300, 400]);
+
+      var extent = [d3.min(chartInfo, function(d) { return d.meanLogError - d.confidenceIntervalsLogError - .2; }),
+                    d3.max(chartInfo, function(d) { return d.meanLogError + d.confidenceIntervalsLogError + .2; })];
+      var extent_adjusted = [extent[0] - ((extent[1] - extent[0]) * .5), extent[1] + ((extent[1] - extent[0]) * .5)];
+      const xScale = d3.scaleLinear()
+        .range([0, width])
+        .domain( extent );
+
+      var svg = d3.select("#svg_container").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+
+      // Add the x Axis
+      svg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .style("font", "16px times")
+          .call(d3.axisBottom(xScale));
+
+      // text label for the x axis
+      svg.append("text")
+          .attr("transform",
+                "translate(" + (width/2) + " ," +
+                               (height + margin.top + 20) + ")")
+          .style("text-anchor", "middle")
+          .style("font", "32px times")
+          .style("fill", "white")
+          .text("Log Error");
+
+      // Add the y Axis
+      svg.append("g")
+          .style("font", "20px times")
+          .call(d3.axisLeft(yScale));
+
+      // circles
+      svg.selectAll("circle")
+          .data(chartInfo)
+          .enter().append("circle")
+          .attr("r", 15)
+          .attr("fill", "white")
+          .attr("stroke", "black")
+          .attr("cx", extent_adjusted[0])
+          .attr("cy", d => yScale(d.chartType))
+          .transition()
+          .delay(function(d,i){ return 250*i; })
+          .duration(1250)
+          .attr("cx", d => xScale(d.meanLogError));
+
+      // confidence intervals
+      var lines = svg.selectAll('line.error')
+        .data(chartInfo);
+      lines.enter()
+        .append('line')
+        .attr('class', 'error')
+        .style("stroke", "white")
+        .style("stroke-width", 5)
+      .merge(lines)
+        .attr("x1", d => xScale(d.meanLogError))
+        .attr("y1", d => yScale(d.chartType))
+        .attr("x2", d => xScale(d.meanLogError))
+        .attr("y2", d => yScale(d.chartType))
+      .transition()
+        .duration(1250)
+      .transition()
+        .delay(function(d,i){ return 300*i; })
+        .duration(1250)
+        .attr("x1", d => xScale(d.meanLogError - d.confidenceIntervalsLogError))
+        .attr("x2", d => xScale(d.meanLogError + d.confidenceIntervalsLogError));
+
+      // smaller left lines
+      var lines_small = svg.selectAll('line.small')
+        .data(chartInfo);
+      lines.enter()
+        .append('line')
+        .attr('class', 'small')
+        .style("stroke", "white")
+        .style("stroke-width", 5)
+      .merge(lines)
+        .attr("x1", d => xScale(d.meanLogError - d.confidenceIntervalsLogError))
+        .attr("y1", d => yScale(d.chartType))
+        .attr("x2", d => xScale(d.meanLogError - d.confidenceIntervalsLogError))
+        .attr("y2", d => yScale(d.chartType))
+      .transition()
+        .duration(2500)
+      .transition()
+        .delay(function(d,i){ return 300*i; })
+        .duration(500)
+        .attr("y1", d => yScale(d.chartType) + 15)
+        .attr("y2", d => yScale(d.chartType) - 15);
+
+      // smaller right lines
+      var lines_small = svg.selectAll('line.small')
+        .data(chartInfo);
+      lines.enter()
+        .append('line')
+        .attr('class', 'small')
+        .style("stroke", "white")
+        .style("stroke-width", 5)
+      .merge(lines)
+        .attr("x1", d => xScale(d.meanLogError + d.confidenceIntervalsLogError))
+        .attr("y1", d => yScale(d.chartType))
+        .attr("x2", d => xScale(d.meanLogError + d.confidenceIntervalsLogError))
+        .attr("y2", d => yScale(d.chartType))
+      .transition()
+        .duration(2500)
+      .transition()
+        .delay(function(d,i){ return 300*i; })
+        .duration(500)
+        .attr("y1", d => yScale(d.chartType) + 15)
+        .attr("y2", d => yScale(d.chartType) - 15);
+    }
+
+
+		/**
+		 * 
+		 *	response times
+		 * 
+		 * */
+
+    function meanResponseTimeChart(chartInfo) {
+			chartInfo = chartInfo.slice();
+			chartInfo.sort((a, b) => a.meanRepsonseTimeMS > b.meanRepsonseTimeMS ? 1 : -1);
+      var margin = {top: 50, right: 20, bottom: 100, left: 100},
+          width = 960 - margin.left - margin.right,
+          height = 600 - margin.top - margin.bottom;
+
+      // console.log(chartInfo.map(d => d.chartType));
+      // set ranges
+      const xScale = d3.scaleOrdinal()
+        .domain(chartInfo.map(d => d.chartType))
+        .range([25, 125, 225, 325, 425]);
+
+      const yScale = d3.scaleLinear()
+        .range([height, 0])
+        .domain( [
+					d3.min(chartInfo, d => d.meanRepsonseTimeMS) - 2000,
+					d3.max(chartInfo, d => d.meanRepsonseTimeMS) + 2000
+				] );
+
+      var svg = d3.select("#meantiming_container").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+
+      // Add the x Axis
+      svg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .style("font", "16px times")
+          .call(d3.axisBottom(xScale));
+
+      // text label for the x axis
+      svg.append("text")
+          .attr("transform",
+                "translate(" + (width/2) + " ," +
+                               (height + margin.top + 20) + ")")
+          .style("text-anchor", "middle")
+          .style("font", "32px times")
+          .style("fill", "white")
+          .text("Mean Response Time by Chart Type (ms)");
+
+      // Add the y Axis
+      svg.append("g")
+          .style("font", "20px times")
+          .call(d3.axisLeft(yScale));
+
+      // circles
+      svg.selectAll("rect")
+          .data(chartInfo)
+          .enter().append("rect")
+          .attr("fill", "white")
+          .attr("stroke", "black")
+          .attr("width", 50)
+          .attr("height", d => yScale(d.meanRepsonseTimeMS))
+          // .transition()
+          // .delay(function(d,i){ return 250*i; })
+          // .duration(1250)
+          .attr("x", d => xScale(d.chartType) - 25)
+          .attr("y", d => height - yScale(d.meanRepsonseTimeMS));
+    }
+
+		function timingChart(chartInfo) {
+      var margin = {top: 50, right: 20, bottom: 100, left: 100},
+          width = 960 - margin.left - margin.right,
+          height = 600 - margin.top - margin.bottom;
+
+      // set ranges
+      const yScale = d3.scaleLinear()
+        .domain(d3.extent(chartInfo))
+        .range([height, 0]);
+
+      const xScale = d3.scaleLinear()
+				.domain( [0, chartInfo.length - 1] )
+        .range([0, width]);
+
+      var svg = d3.select("#timing_container").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+
+      // Add the x Axis
+      svg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .style("font", "16px times")
+          .call(d3.axisBottom(xScale));
+
+      // text label for the x axis
+      svg.append("text")
+          .attr("transform",
+                "translate(" + (width/2) + " ," +
+                               (height + margin.top + 20) + ")")
+          .style("text-anchor", "middle")
+          .style("font", "32px times")
+          .style("fill", "white")
+          .text("Mean Response Time by Trial Number (ms)");
+
+      // Add the y Axis
+      svg.append("g")
+          .style("font", "20px times")
+          .call(d3.axisLeft(yScale));
+
+      // circles
+      const circles = svg.append("g").selectAll("circle")
+          .data(chartInfo);
+      circles.enter().append("circle")
+          .attr("r", 3)
+          .attr("fill", "white")
+          .attr("stroke", "black")
+          .attr("cy", d => yScale(d))
+          .transition()
+          .delay(function(d,i){ return 10*i; })
+          .duration(1250)
+          .attr("cx", (d, i) => xScale(i));
+
+      // lines
+      const lines = svg.append("g").selectAll("line")
+					.data(chartInfo.slice(0, chartInfo.length - 1));
+			lines.enter()
+					.append("line")
+					.attr("fake", (d, i) => console.log(i + '  :  ' + d))
+					.attr("stroke-width", 2)
+          .attr("stroke", "white")
+          .attr("opacity", 0.7)
+          .attr("x1", (d, i) => xScale(i))
+          .attr("y1", (d, i) => yScale(d))
+          .attr("x2", (d, i) => xScale(i))
+          .attr("y2", (d, i) => yScale(d))
+          .transition()
+          .delay(function(d, i){ return 10 * i; })
+          .duration(1250)
+          .attr("x2", (d, i) => xScale(i + 1))
+          .attr("y2", (d, i) => yScale(chartInfo[i + 1]));
+
+
+			// trend line
+			var leastSquaresCoeff = leastSquares(d3.range(0, chartInfo.length), chartInfo);
+			
+			// apply the reults of the least squares regression
+			var x1 = 0;
+			var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
+			var x2 = chartInfo.length - 1;
+			var y2 = leastSquaresCoeff[0] * chartInfo.length + leastSquaresCoeff[1];
+			var trendData = [[x1,y1,x2,y2]];
+			
+			var trendline = svg.selectAll(".trendline")
+				.data(trendData);
+				
+			trendline.enter()
+				.append("line")
+				.attr("class", "trendline")
+				.attr("x1", function(d) { return xScale(d[0]); })
+				.attr("y1", function(d) { return yScale(d[1]); })
+				.attr("x2", function(d) { return xScale(d[2]); })
+				.attr("y2", function(d) { return yScale(d[3]); })
+				.attr("stroke", "#b8d6a7")
+				.attr("stroke-width", 3);
+
+			// display equation on the chart
+			svg.append("text")
+				.text("eq: " + leastSquaresCoeff[0].toFixed(2) + "x + " + 
+					leastSquaresCoeff[1].toFixed(2))
+				.attr("class", "text-label")
+				.style("fill", "#b8d6a7")
+				.attr("x", function(d) {return xScale(x2 / 2) - 60;})
+				.attr("y", function(d) {return 10;});
+			
+			// display r-square on the chart
+			svg.append("text")
+				.text("r-sq: " + leastSquaresCoeff[2].toFixed(2))
+				.attr("class", "text-label")
+				.style("fill", "#b8d6a7")
+				.attr("x", function(d) {return xScale(x2 / 2) - 60;})
+				.attr("y", function(d) {return 60;});
+    }
+
+
+
+		// src: https://gist.github.com/benvandyke/8459843
+		function leastSquares(xSeries, ySeries) {
+			var reduceSumFunc = function(prev, cur) { return prev + cur; };
+			
+			var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
+			var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
+
+			var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
+				.reduce(reduceSumFunc);
+			
+			var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
+				.reduce(reduceSumFunc);
+				
+			var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
+				.reduce(reduceSumFunc);
+				
+			var slope = ssXY / ssXX;
+			var intercept = yBar - (xBar * slope);
+			var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
+			
+			return [slope, intercept, rSquare];
+		}
+
+	</script>
+</head>
+<body>
+
+  <section class="landing-container" id="landing" style="overflow: auto;">
+		<div class="landing-nav">
+			<div class="company" onclick="location.href='index.html';"><img src="graphsGalore.png">Graphs Galore</div>
+
+		</div>
+		<div class="landing-sides">
+			<div class="item landing-jumbo">
+				<div class="title">Results!!!</div>
+				<div class="subtitle">Participants: <span id="numParticipants"></span></div>
+				<div id="svg_container"></div>
+				<div id="meantiming_container"></div>
+				<div id="timing_container"></div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

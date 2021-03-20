@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Study</title>
+	<link rel="stylesheet" href="styles.css">
+	<script>
+		// window.addEventListener('load', async function() {
+		// 	// 1. fetch experiment data set
+		// 	const { experiment } = await fetch('/api/v1/experiment', {
+		// 		method: 'POST',
+		// 		headers: {
+		// 			'Content-Type': 'application/json'
+		// 		},
+		// 		body: JSON.stringify({
+		// 			datasetsCount: 10,
+		// 			datapointsCount: 5
+		// 		})
+		// 	}).then(resp => resp.json());
+		// 	console.log(experiment);
+		//
+		// 	// 2. collect data and format result to send back to server
+		// 	const result = {}; // result with key as _id of dataset
+		// 	let prevResponseTimeMS = performance.now() / 1000;
+		// 	for (const dataset of experiment.datasets) {
+		// 		const responseTimeMS = (performance.now() / 1000) - prevResponseTimeMS; // measured response time in milliseconds
+		// 		result[dataset._id] = {
+		// 			responseTimeMS,
+		// 			pctDifferenceParticipant: 30 // participant said difference in data was 30%
+		// 		}
+		// 		prevResponseTimeMS = responseTimeMS;
+		// 	}
+		// 	console.log({ result });
+		//
+		// 	// 3. upload result to server
+		// 	const { experiment: savedExperiment } = await fetch('/api/v1/experiment', {
+		// 		method: 'PUT',
+		// 		headers: {
+		// 			'Content-Type': 'application/json'
+		// 		},
+		// 		body: JSON.stringify({
+		// 			experimentID: experiment._id,
+		// 			result
+		// 		})
+		// 	}).then(resp => resp.json());
+		// 	console.log(savedExperiment);
+		//
+		// 	document.getElementById('test-output').innerHTML = JSON.stringify(savedExperiment, null, 2);
+		// 
+		// });
+	</script>
+</head>
+<body>
+
+	<section class="landing-container" id="landing">
+		<div class="landing-sides">
+			<div class="item landing-jumbo">
+				<div class="company"><img src="graphsGalore.png">Graphs Galore</div>
+				<div class="title">What do you see?</div>
+				<div class="subtitle">In this experiment, we ask you to judge what the percent of a smaller value to a larger value in a chart is.</div>
+
+				<button onclick="location.href='experiment.html';">Get started</button>
+			</div>
+			<div class="landing-cover">
+				<img src="undra.svg">
+			</div>
+		</div>
+	</section>
+
+
+
+</body>
+</html>
