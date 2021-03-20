@@ -40,14 +40,16 @@ Analyzing the chart we can see that for the line and bar chart the performance o
 
 
 ### Technical Achievements
-- We deployed our experiment online and it can be accessed through the following link.
+- **Database Connection**: We deployed our experiment online and it can be accessed through the following link.
 [Link to the experiment](https://internal.assistments.org/LiveChart/experimentindex)
 The webpage is hosted on a server at WPI. 
 We are using Spring, the pages are hosted using JSP, the API is RESTful and the data is stored ina Postgres DB.
+- **No Redundancy**: The data collection stored the comparison values on the points as to limit the amount of redundant data. It also made it easier to calculate the size percentage between the two selected points.
 
 
 ### Design Achievements
 - **Transitions:** We used transitions on the bar, pie, and line charts as a unique condition to test. This also provided a coding challenge in d3.
+- **Simplistic UI**: The UI followed the simplistic design principles as to not influence the users in any fashion and pull away from the experiement. Only key requirements were highlighted for user understanding.
 
 ### References
 - [https://www.d3-graph-gallery.com/graph/pie_basic.html](https://www.d3-graph-gallery.com/graph/pie_basic.html)
