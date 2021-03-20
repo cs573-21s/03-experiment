@@ -63,13 +63,13 @@ In our second trial we still found that pie charts performed a lot better than a
 
 <img src="chartsSecondTrial.png" width="500">
 
-- Most users still had a very difficult time reading stacked bar charts with most error values between 2.8 and 3. This was a tighter distribution of erro compared to the first trial, however the error was more severe.<br>
+- Most users still had a very difficult time reading stacked bar charts with most error values between 2.8 and 3. This was a tighter distribution of error compared to the first trial, however the error was more severe.<br>
 - The pie chart error still had the greatest range of error, stretching from about 2 to 2.4. The error found in this trial were also much higher than those reported in our first attempt. <br>
 - This time, the bar chart did not have the smallest range of error, however the average error was the lowest of all of the charts and the range spanned from (~2.08 - ~2.3). We also noticed that it was interesting how the entire range of bar chart error fit into the range of error for pie charts. <br>
 Although our findings for this trial were still a bit unexpected with successful pie charts, our results from our second trial were much better than those from the first.
 
 ### Radial Analysis
-Our extra part for this experiment consisted of a smaller trial of just radial graphs: those with 3 bars, 5 bars, 7 bars. We hypothesized that it would be easier for the user to read a chart with more bars because they would be easier to reference in comparison to each other. However, the data suggests that there is no clear correlation between the number of bars and the accuracy of the reading.<br>
+Our extra part for this experiment consisted of a smaller trial of just radial graphs: those with 3 bars, 5 bars, and 7 bars. We hypothesized that it would be easier for the user to read a chart with more bars because they would be easier to reference in comparison to each other. However, the data suggests that there is no clear correlation between the number of bars and the accuracy of the reading.<br>
 
 <img src="img/logerr-extraPart.png" width="500">
 
