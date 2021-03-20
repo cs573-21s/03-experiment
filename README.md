@@ -87,6 +87,8 @@ Achevements
 
 ### Technical Achievenment
 - After recreating the classical experiment, we decided to pursue a third part involving radial charts. This type of graph is was not included in the classical experiment but is becoming an increasingly more popular way to represent data. We created 3 types of this chart, 3 bars, 5 bars, 7 bars, and wanted to determine if the number of bars influenced how accurate the reported percent was. This was an interesting component because creating a radial graph with d3 was a lot more complicated than anticipated causing multiple bugs before it came together.<br>
+|name|Type|name|Type|name|Type|
+|---|---|---|---|---|---|
 |TYPE8|<img src="img/TYPE8.png" width="200">|TYPE9|<img src="img/TYPE9.png" width="200">|TYPE10|<img src="img/TYPE10.png" width="200">
 
 - We did this experiment twice! <br>
