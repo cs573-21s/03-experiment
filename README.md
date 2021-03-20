@@ -99,7 +99,7 @@ Achevements
 <img src="img/progressbar.png" width="300"><br>
 
 - We would also like to recognize our input box as a design acheivement. While it makes it clear that the user must input an integer, this design makes it possible for the user to increase or decrease their response by a value of 1 much easier than if they had to type/delete/type/delete etc. <br>
-<img src="img/inputbar.png" width="300"><br>
+<img src="img/inputbar.PNG" width="300"><br>
 
 - Also, the thank you page is a design acheivement that indicates the end of the trial, giving the user closure that the survey is complete. Once finished, they click close and it takes them straight to a Google search bar! <br>
 
