@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script type="text/javascript" src="charts.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="progress">
+        <div>Test <span id="page"></span>/70</div>
+        <progress value="25" max="70"></progress>
+    </div>
+
+    <div class="instruc">
+        <p>In this experiment,</p>
+        <p>you are asked to judge</p>
+        <p>what is the percent of a smaller value to a larger value in several charts.</p>
+        <br>
+        <p>It is better to brower this page on computer. It will take you around 15 minutes.</p>
+        <br>
+        <p>We won't record any information from you except your answers.</p>
+        <p>Click the 'agree' button to begin.</p>
+        <br>
+        <p>Thank you!</p>
+    </div>
+    <div class="submit_instruc">
+        <button id="disagree"><a href="https://www.google.com/">DISAGREE</a></button>
+        <button id="agree">AGREE</button>
+    </div>
+    <div class="svg" id="svg"></div>
+    <div class="ps">
+        <p>Two values are marked with dots</p>
+        <p>What do you think the percent of the smaller value to the larger value?</p>
+        <p>Please put your answer below</p>
+        <p>e.g.If you think the smaller one is exactly a half of the bigger one.</p>
+        <p>Please input '50'</p>
+    </div>
+
+    <div class="submit">
+        <form id="form1" method="POST" target="iframe" action='/'>
+            <input id="truePercent" type="hidden" id="test" name="truePercent">
+            <input id="visType" type="hidden" id="test" name="visType">
+            <input id='reportedPercent' name="reportedPercent" type="number" max="100" min="0" placeholder="INPUT HERE"
+                autocomplete="off">
+            <input id="hiddenText" type="text" style="display:none" />
+            <button type="button" id="Next">Next</button>
+        </form>
+        <iframe id="iframe" name="iframe" style="display:none;"></iframe>
+    </div>
+    <div class="submit_part2">
+        <form id="form2" method="POST" target="iframe" action="/">
+            <input id="truePercent2" type="hidden" id="test" name="truePercent">
+            <input id="visType2" type="hidden" id="test" name="visType">
+            <input id="reportedPercent2" type="number" name="reportedPercent" max="100" min="0" placeholder="INPUT HERE"
+                autocomplete="off">
+            <input id="hiddenText" type="text" style="display:none" />
+            <button type="button" id="Next2">Next</button>
+        </form>
+
+    </div>
+    <div class="part1">
+        <p>Part 1</p>
+        <button id="continue1">Continue</button>
+    </div>
+    <div class="part2">
+        <p>Part 2</p>
+        <button id="continue2">Continue</button>
+    </div>
+    <div class="Thanks">
+        <p>Thanks!</p>
+        <button><a href="https://www.google.com/">Close</a></button>
+    </div>
+</body>
+<script>
+    var count = 0;
+    var rightanswer;
+    var visType;
+    var progress = document.getElementsByTagName('progress')[0];
+    var span_page = document.getElementById('page');
+    var div_progress = document.getElementsByClassName('progress')[0];
+
+    var button_agree = document.getElementById('agree');
+    var div_instruc = document.getElementsByClassName('instruc')[0];
+    var div_submit_instruc = document.getElementsByClassName('submit_instruc')[0];
+
+    var divSvg = document.getElementById('svg');
+    var div_ps = document.getElementsByClassName('ps')[0];
+    //This is part 1 submit button
+    var div_submit = document.getElementsByClassName('submit')[0];
+    var button = document.getElementById('Next');
+    //this is part 2 submit button
+    var div_submit_part2 = document.getElementsByClassName('submit_part2')[0];
+    var button_part2 = document.getElementById('Next2');
+
+    var form1 = document.getElementById('form1');
+    var form2 = document.getElementById('form2');
+    var truePercent = document.getElementById('truePercent');
+    var truePercent2 = document.getElementById('truePercent2');
+    var type = document.getElementById('visType');
+    var type22 = document.getElementById('visType2');
+    var reportedPercent = document.getElementById('reportedPercent');
+    var reportedPercent2 = document.getElementById('reportedPercent2');
+
+    var div_part1 = document.getElementsByClassName('part1')[0];
+    var button_continue1 = document.getElementById('continue1');
+    var div_part2 = document.getElementsByClassName('part2')[0];
+    var button_continue2 = document.getElementById('continue2');
+
+    var div_Thanks = document.getElementsByClassName('Thanks')[0];
+
+    //create data for Type1 - type5
+    var dataForChart = [];
+    for (let i = 0; i < 10; i++) {
+        let random1 = d3.randomInt(1, 11)();
+        let random2;
+        let data = [];
+        do {
+            random2 = d3.randomInt(1, 11)();
+        } while (random2 == random1)
+        data.push(random1);
+        data.push(random2)
+        data.push([1, 2, 3, 4, 5])
+        dataForChart.push(data)
+    }
+
+    button_agree.addEventListener('click', function () {
+        div_instruc.style.display = 'none';
+        div_submit_instruc.style.display = 'none';
+
+        div_part1.style.display = 'block';
+    })
+    button_continue1.addEventListener('click', function () {
+        div_part1.style.display = 'none';
+
+        div_progress.style.display = 'block';
+        divSvg.style.display = 'block';
+        div_ps.style.display = 'block';
+        div_submit.style.display = 'block';
+
+        let randomData = d3.randomInt(0, dataForChart.length)();
+        let vbn = dataForChart[randomData];
+        let randomDraw = d3.randomInt(0, vbn[2].length)();
+        if (vbn[2][randomDraw] == 1) {
+            type1(vbn[1], vbn[0]);
+        } else if (vbn[2][randomDraw] == 2) {
+            type2(vbn[1], vbn[0]);
+        } else if (vbn[2][randomDraw] == 3) {
+            type3(vbn[1], vbn[0]);
+        } else if (vbn[2][randomDraw] == 4) {
+            type4(vbn[1], vbn[0]);
+        } else if (vbn[2][randomDraw] == 5) {
+            type5(vbn[1], vbn[0]);
+        }
+        vbn[2].splice(randomDraw, 1);
+        if (vbn[2].length == 0) {
+            dataForChart.splice(randomData, 1)
+        }
+
+        count++;
+        progress.value = count;
+        span_page.innerHTML = count;
+        truePercent.value = rightanswer;
+        type.value = visType;
+    })
+
+    button.addEventListener('click', function () {
+        if (reportedPercent.value == '') {
+            alert('You must input a number')
+        } else {
+            divSvg.innerHTML = '';
+            count++;
+            progress.value = count;
+            span_page.innerHTML = count;
+
+            form1.submit();
+            form1.reset();
+
+            if (dataForChart.length == 0) {
+                divSvg.style.display = 'none';
+                div_ps.style.display = 'none';
+                div_submit.style.display = 'none';
+
+                div_progress.style.display = 'none';
+                div_part2.style.display = 'block';
+
+                count--;
+                progress.value = count;
+                span_page.innerHTML = count;
+            } else {
+                let randomData = d3.randomInt(0, dataForChart.length)();
+                let vbn = dataForChart[randomData];
+                let randomDraw = d3.randomInt(0, vbn[2].length)();
+                if (vbn[2][randomDraw] == 1) {
+                    type1(vbn[1], vbn[0]);
+                } else if (vbn[2][randomDraw] == 2) {
+                    type2(vbn[1], vbn[0]);
+                } else if (vbn[2][randomDraw] == 3) {
+                    type3(vbn[1], vbn[0]);
+                } else if (vbn[2][randomDraw] == 4) {
+                    type4(vbn[1], vbn[0]);
+                } else if (vbn[2][randomDraw] == 5) {
+                    type5(vbn[1], vbn[0]);
+                }
+                vbn[2].splice(randomDraw, 1);
+                if (vbn[2].length == 0) {
+                    dataForChart.splice(randomData, 1)
+                }
+                truePercent.value = rightanswer;
+                type.value = visType;
+            }
+        }
+
+
+    })
+
+    var piedata = createPieData();
+
+    button_continue2.addEventListener('click', function () {
+        div_part2.style.display = 'none';
+
+        div_progress.style.display = 'block';
+        divSvg.style.display = 'block';
+        div_ps.style.display = 'block';
+        div_submit_part2.style.display = 'block';
+
+        let randomData = d3.randomInt(0, piedata.length)();
+        let vbn = piedata[randomData];
+        let randomDraw = d3.randomInt(0, vbn[2].length)();
+        if (vbn[2][randomDraw] == 1) {
+            type6(vbn[0], vbn[1]);
+        } else if (vbn[2][randomDraw] == 2) {
+            type7(vbn[0], vbn[1]);
+        }
+
+        vbn[2].splice(randomDraw, 1);
+        if (vbn[2].length == 0) {
+            dataForChart.splice(randomData, 1)
+        }
+
+        count++;
+        progress.value = count;
+        span_page.innerHTML = count;
+        truePercent2.value = rightanswer;
+        type22.value = visType;
+    })
+
+    button_part2.addEventListener('click', function () {
+        if (reportedPercent2.value == '') {
+            alert('You must input a number')
+        } else {
+            divSvg.innerHTML = '';
+            count++;
+            progress.value = count;
+            span_page.innerHTML = count;
+
+            form2.submit();
+            form2.reset();
+
+            // input_part1.value = '';
+            if (piedata.length == 0) {
+                divSvg.style.display = 'none';
+                div_ps.style.display = 'none';
+                div_submit_part2.style.display = 'none';
+                div_progress.style.display = 'none';
+
+
+                div_Thanks.style.display = 'block';
+                // div_Thanks.style.display = 'block';
+            } else {
+                let randomData = d3.randomInt(0, piedata.length)();
+                let vbn = piedata[randomData];
+                let randomDraw = d3.randomInt(0, vbn[2].length)();
+                if (vbn[2][randomDraw] == 1) {
+                    type6(vbn[0], vbn[1]);
+                } else if (vbn[2][randomDraw] == 2) {
+                    type7(vbn[0], vbn[1]);
+                }
+
+                vbn[2].splice(randomDraw, 1);
+                if (vbn[2].length == 0) {
+                    piedata.splice(randomData, 1)
+                }
+
+                truePercent2.value = rightanswer;
+                type22.value = visType;
+            }
+        }
+
+
+    })
+
+
+</script>
+
+</html>

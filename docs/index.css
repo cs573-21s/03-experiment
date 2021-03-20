@@ -1,0 +1,184 @@
+        /* svg {
+            border: 1px solid black;
+        } */
+        div.progress{
+            display: none;
+            position: relative;
+            width: 400px;
+            height: 20px;
+            margin: 0 auto;
+        }
+        div.progress div{
+            position: absolute;
+            top: 100px;
+            left: 70px;
+            display: block;
+        }
+        div.progress progress{
+            position: absolute;
+            top: 100px;
+            right: 10px;
+            display: block;
+        }
+
+
+        div.instruc{
+            margin-top: 200px;
+            display: block;
+        }
+        div.submit_instruc{
+            position: relative;
+            width: 400px;
+            margin: 0 auto;
+            margin-top: 100px;
+            display: block;
+        }
+        div.submit_instruc a{
+            color: white;
+            text-decoration: none;
+            cursor: default;
+        }
+        div.submit_instruc button#disagree{
+            display: block;
+            position: absolute;
+            background: teal;
+            width: 100px;
+            height: 30px;
+            left: 10px;
+        }
+        div.submit_instruc button#agree{
+            display: block;
+            position: absolute;
+            background: teal;
+            width: 100px;
+            height: 30px;
+            right: 10px;
+            color: white;
+        }
+        div.svg {
+            width: 400px;
+            height: 450px;
+            margin: 50px auto;
+            display: none;
+        }
+        div.ps{
+            display: none;
+        }
+        
+        p {
+            text-align: center;
+        }
+
+        div.submit {
+            position: relative;
+            width: 400px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        div.submit input {
+            position: absolute;
+            left: 10px;
+            vertical-align: top;
+            width: 200px;
+            height: 30px;
+            text-align: center;
+            font-size: 25px;
+            line-height: 25px;
+        }
+
+        div.submit button {
+            position: absolute;
+            right: 10px;
+            vertical-align: top;
+            width: 100px;
+            height: 35px;
+            padding-top: 5px;
+            background-color: teal;
+            color: white;
+        }
+        div.submit_part2 {
+            position: relative;
+            width: 400px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        div.submit_part2 input {
+            position: absolute;
+            left: 10px;
+            vertical-align: top;
+            width: 200px;
+            height: 30px;
+            text-align: center;
+            font-size: 25px;
+            line-height: 25px;
+        }
+
+        div.submit_part2 button {
+            position: absolute;
+            right: 10px;
+            vertical-align: top;
+            width: 100px;
+            height: 35px;
+            padding-top: 5px;
+            background-color: teal;
+            color: white;
+        }
+        div.part1{
+            display: none;
+        }
+        div.part1 p{
+            margin-top: 300px;
+            text-align: center;
+            font-size: 30px;
+        }
+        div.part1 button{
+            display: block;
+            width: 100px;
+            height: 35px;
+            margin: 0 auto;
+            margin-top: 30px;
+            background-color: teal;
+            color: white;
+        }
+        div.part2{
+            display: none;
+        }
+        div.part2 p{
+            margin-top: 300px;
+            text-align: center;
+            font-size: 30px;
+        }
+        div.part2 button{
+            display: block;
+            width: 100px;
+            height: 35px;
+            margin: 0 auto;
+            margin-top: 30px;
+            background-color: teal;
+            color: white;
+        }
+        div.Thanks{
+            display: none;
+        }
+        div.Thanks p{
+            margin-top: 300px;
+            text-align: center;
+            font-size: 30px;
+        }
+
+        div.Thanks button{
+            display: block;
+            width: 100px;
+            height: 35px;
+            margin: 0 auto;
+            margin-top: 30px;
+            background-color: teal;
+            color: white;
+        }
+        div.Thanks button a{
+            color: white;
+            text-decoration: none;
+            cursor: default;
+        }

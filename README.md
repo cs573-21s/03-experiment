@@ -1,96 +1,110 @@
 Assignment 3 - Replicating a Classic Experiment  
 ===
+Introduction
+---
+There are two experiments in our assignment.
+- Classical experiment   
+As the experiments in Cleveland paper are so classical and fundamental in the history of data visualization, our group replicated experiments in Cleveland paper first. Bar charts, pie charts, stacked bar cahrts are included in our survey.  
+   *Github page: https://zihao777.github.io/03-experiment/*  
+   *Website: http://47.242.141.68:8000*  
+- Radial experiment   
+   As an extra part, we want to figure out whether people have a good quantitative cognition for radial bar chart. In general speaking, we designed 3 types of radial bar chart. Each one has 3 bars, 5 bars, 7 bars.  
+  *Github page: https://zihao777.github.io/03-experiment/extra/*   
+  *Website:  http://47.242.141.68:8000/extra*    
+  
+To collect the data, we rent a server to deploy our page. Node.js is used to response, required on server, and connect database. The database is managed by MongoDB. All charts are drawn by D3.js.
 
-For the scope of this project, assume the role of a scientist who runs experiments for a living.
+Experiment
+---
+### Classical experiment
+Classical experiment is consisted with two parts: position-length experiment and position-angle experiment. There are 70 trails and the trails are in random order. In each graph, two bars or areas are marked with a black dot and users need to judge which what percent the smaller to big one. The first page is an instruction page that user can agree us to collect data form them or disagree.
+     
+- In part-one, users were shown the five types of graphs which are named TYPE1, TYPE2, TYPE3, TYPE4, TYPE5 shown in the below table. Ten groups of data are generated for each type of graph, so part-one has 50 graphs. Each graph is either a bar chart or stacked bar chart.<br><br>
+As illustrated in Cleveland paper, for the grouped bar chart, the dots appeared either in the second and third bars in second group or in the second bars of the two groups. For the stacked bar chart, dots appeared either in the top divisions of two bars or top two divisions of left bar or bottom divisions of two bars.<br> <br>
+The values involved in the user's judgments were show below:<br>
+<img src="img/equation1.png" width="400"><br>
+The values of bar chart not involved in the users' judgments are randomly generated from 0 to 100. The values of stacked bar chart not involved in the users' judgments are randomly generated from 0 to 30 or 0 to 20. All values are shown in a same scale on the page.  
+    
+- In part-two, users were shown the two types of graphs which are named TYPE6, TYPE7 shown in the below table. Same with part-one, ten groups of data are generated for each type of graph, so part-two has 20 graphs. <br><br>
+In this part, each group of  values is generated randomly and can be sumed up to 100. They also ,eet the three requirments in Cleveland paper: The minimum value had to be greater than 3; the maximum value had to be less than 39 and all differences between values in a group had to be greater than 0.1. The values which have the biggest value and smallest value will be marked with black dot.
 
-Q: How do we know that bar charts are "better" than pie charts?  
-A: Controlled experiments!
+|Name|Type|Name|Type|Name|Type|
+|----|----|----|----|----|----|
+|TYPE1|<img src="img/TYPE1.png" width="200">|TYPE2|<img src="img/TYPE2.png" width="200">|TYPE3|<img src="img/TYPE3.png" width="200">|
+|TYPE4|<img src="img/TYPE4.png" width="200">|TYPE5|<img src="img/TYPE5.png" width="200">|TYPE6|<img src="img/TYPE6.png" width="200">|
+|TYPE7|<img src="img/TYPE7.png" width="200">|||
 
-In this assignment you'll implement a simple controlled experiment using some of the visualizations you’ve been building in this class. 
-You'll need to develop support code for the experiment sequence, results file output, and other experiment components. 
-(These are all simple with Javascript buttons and forms.)
-The main goals for you are to a) test three competing visualizations, b) implement data generation and error calculation functions inspired by Cleveland and McGill's 1984 paper, c) run the experiment with 10 participants (or a trial equivalent), and d) do some basic analysis and reporting of the results.
+### Radial experiment
+- There are 60 trails and the trails are in random order. In each graph, two bars are marked with a black dot and users need to judge which what percent the smaller to big one. The first page is an instruction page that user can agree us to collect data form them or disagree.<br><br>
+In this experiment, users were shown the three types of graphs which are named TYPE8, TYPE9 and TYPE10 shown in the below table. Twenty groups of data are generated for each type of graph, so part-two has 20 graphs.<br><br>
+Which bar is marked with black dot is randomly and values involved in the user's judgments were show below:<br>
+<img src="img/equation1.png" width="400"><br>
+The values not involved in the users' judgments are randomly generated from 20 to 100. All values are shown in a same scale on the page.  
 
-For this assignment you should aim to write everything from scratch. For experimentation it is often necessary to control all elements of the chart.
-You should definitely *reference* demo programs from books or the web, and if you do please provide a References section with links at the end of your Readme.
+|Name|Type|Name|Type|Name|Type|
+|-|-|-|-|-|-|
+|TYPE8|<img src="img/TYPE8.png" width="200">|TYPE9|<img src="img/TYPE9.png" width="200">|TYPE10|<img src="img/TYPE10.png" width="200">|
 
-Requirements
+Analysis
 ---
 
-- Look it over Cleveland and McGill's original experiment (see the section below) and [watch this video](experiment-example.mp4) to get a sense of the experiment structure and where your visualizations will go.
-- When viewing the example experiment video, note the following:
-    - Trials are in random order.  
-    - Each trial has a randomly generated set of 5-10 data points.  
-    - Two of these data points are marked.  
-    - (Note: the experiment UI and User Experience could be better. Plenty of design achievements here).
-- Implement the data generation code **as described in the Cleveland & McGill paper**. 
-    - The goal is to generate a set of random datapoints (usually 5 or 10, with values be between 0 and 100) and to mark two of them for comparison in the trial. 
-- Add 3 visualizations (i.e. conditions) to your experiment. When you are adding these visualizations, think about *why* these visualizations are interesting to test. In other words, keep in mind a *testable hypothesis* for each of the added visualization. Some good options include bar charts, pie charts, stacked-bar charts, and treemaps. You can also rotate your bar chart to be horizontal or upside-down as one of your conditions. You are encouraged to test unorthodox charts -- radar charts come to mind, but there are MANY possibilities here-- feel free to be creative!
-    - Follow the style from Cleveland and McGill closely (e.g. no color, simple lines) unless you are specifically testing a hypothesis (e.g. color versus no color). Pay attention to spacing between elements like bars. Do not mark bars for comparison using color-- this makes the perceptual task too easy.
-- After each trial, implement code that grades and stores participant’s responses.
-- At the end of the experiment, to get the data, one easy option use Javascript to show the data from the current experiment\* (i.e. a comma separated list in a text box) and copy it into your master datafile. See the Background section below for an example of what this file should look like. (\*Alternately implement a server, if you're experienced with that sort of thing.)
+### Error for Trial 1
+In our experiment we were asked to find how different charts could be interpreted by different users. As we have learned in our classroom experience, pie charts are not great tools for representing data. Much to our surprise, we found that the log error was negative for the pie chart. This meant that many of the users input values that were very close to the true percentage. While pie charts had the greatest distribution of error, it was still the most well-interpreted chart compared to bar and stacked.<br>
 
-- Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
-- Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
-- Run your experiment with 10 or more participants, or-- make sure you get at least 200 trials **per visualization type** in total.  
-    - Grab friends or people in the class.   
-    - Run at least 20 trials per visualization type, per participant. This is to ensure that you cover the range of possible answers (e.g. 5%, 10%, ..., 95%)
-- Make sure to save the resulting CSV after each participant. Compile the results into a master csv file (all participants, all trials).
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Include example images of each visualization as they appeared in your experiment (i.e. if you used a pie chart show the actual pie chart you used in the experiment along with the markings, not an example from Google Images).
+<img src="img/logerr.png" width="500"><br>
 
-## General Requirements
+- As you can see in the image above, most users had a very difficult time reading stacked bar charts with most error values between 2.5 and 2.75.<br>
+- The pie chart error stretches from about 1.75, partially overlaps with the typical bar chart, and ends at just about 2.11. <br>
+- The bar chart had the smallest range of error, as expected, however the average error was a bit over 2, while pie charts were found to be most successful with average error under 2. <br>
+Because of the questionable data we found in this trial, we decided to pursue a second trial to compare.
 
-0. Your code should be forked from the GitHub repo and linked using GitHub pages.
-2. Your project should use d3 to build visualizations. 
-3. Your writeup (readme.md in the repo) should contain the following:
+### Error for Trial 2
+In our second trial we still found that pie charts performed a lot better than anticipated. However, the average error for the bar chart was smaller than the average for the pie chart, which differed from our first experiment and more closely matched the results of the Cleveland paper. <br>
 
-- Working link to the experiment hosted on gh-pages or some other site.
-- Concise description and screenshot of your experiment.
-- Description of the technical achievements you attempted with this project.
-- Description of the design achievements you attempted with this project.
+<img src="chartsSecondTrial.png" width="500">
 
-Background
+- Most users still had a very difficult time reading stacked bar charts with most error values between 2.8 and 3. This was a tighter distribution of error compared to the first trial, however the error was more severe.<br>
+- The pie chart error still had the greatest range of error, stretching from about 2 to 2.4. The error found in this trial were also much higher than those reported in our first attempt. <br>
+- This time, the bar chart did not have the smallest range of error, however the average error was the lowest of all of the charts and the range spanned from (~2.08 - ~2.3). We also noticed that it was interesting how the entire range of bar chart error fit into the range of error for pie charts. <br>
+Although our findings for this trial were still a bit unexpected with successful pie charts, our results from our second trial were much better than those from the first.
+
+### Radial Analysis
+Our extra part for this experiment consisted of a smaller trial of just radial graphs: those with 3 bars, 5 bars, and 7 bars. We hypothesized that it would be easier for the user to read a chart with more bars because they would be easier to reference in comparison to each other. However, the data suggests that there is no clear correlation between the number of bars and the accuracy of the reading.<br>
+
+<img src="img/logerr-extraPart.png" width="500">
+
+- At first glance, seeing that the radial 7-bar graph had the least average error, it appeared that our hypothesis was correct. However, the second "most successful" chart was the 3-bar chart. The least successful of all was actually the medium, the 5-bar chart.<br>
+- The 7-bar chart had the greatest range of error from ~2.36 - ~2.71, while the 3-bar chart had the smallest range of error (~2.42 - ~2.74), followed closely by the 5-bar chart from ~2.46 - ~2.8. <br>
+- Overall, while we can draw conclusions from our results, the differences between these chart types are not significantly different.<br>
+- Perhaps if we had more time, we would collect more data from more users to more accurately narrow down these results and report any differences in the findings.<br>
+
+### Overall 
+Based on our data from two trials, we did not find that pie charts were the hardest graph to read. Ultimately, it appears to us that to accurately read the values from a chart may simply depend on the users cognitive ability. While our data suggests pie and bar charts over radial and stacked, we may find different results if we attempted a third trial with new users. Overall, bar charts had the lowest average error, but the pie chart performed much better compared to the results of the Cleveland experiment.
+<img src="img/charts-secondtrial-extrapart-combined.png" width="500">
+
+Achevements
 ---
 
-In 1984, William Cleveland and Robert McGill published the results of several controlled experiments that pitted bar charts against pies and stacked-bar variants. 
-Their paper (http://www.cs.ubc.ca/~tmm/courses/cpsc533c-04-spr/readings/cleveland.pdf) (http://info.slis.indiana.edu/~katy/S637-S11/cleveland84.pdf) is considered a seminal paper in data visualization.
-In particular, they ran a psychology-style experiment where users were shown a series of randomly-generated charts with two graphical elements marked like this:
+### Technical Achievenment
+- After recreating the classical experiment, we decided to pursue a third part involving radial charts. This type of graph is was not included in the classical experiment but is becoming an increasingly more popular way to represent data. We created 3 types of this chart, 3 bars, 5 bars, 7 bars, and wanted to determine if the number of bars influenced how accurate the reported percent was. This was an interesting component because creating a radial graph with d3 was a lot more complicated than anticipated causing multiple bugs before it came together.<br>   
 
-![cleveland bar chart](img/cleveland-bar.png)
+|name|Type|name|Type|name|Type|
+|---|---|---|---|---|---|
+|TYPE8|<img src="img/TYPE8.png" width="200">|TYPE9|<img src="img/TYPE9.png" width="200">|TYPE10|<img src="img/TYPE10.png" width="200">|
 
-Participants were then asked, "What percentage is the smaller of the larger?". 
-This was repeated hundreds of time with varying data and charts. 
-By the end of the study, Cleveland and McGill had amassed a large dataset that looked like this:
+- We did this experiment twice! <br>
 
-![cleveland table](img/cleveland-table.png)
+### Design Achievement
+- On the web page, if the user accidentally clicks the Next button without entering a value, their page will send out an alert box to remind the user to enter the answer and null data can be avoided to send to server. <br>
+<img src="img/alert.png" width="300"><br>
 
-__Log-base-2 or "cm-error"__: The true percent is the actual percentage of the smaller to the larger, while the reported percent is what participants reported. 
-Cleveland and McGill recognized that their analyses would be biased if they took `abs(ReportedPercent – TruePercent)` as their score for error. 
-To compensate, they came up with a logarithmic scale for error with this equation:
+- In addition, at the top of the page, users can see which page they are currently on and a progress bar, allowing users to know their progress.<br>
+<img src="img/progressbar.png" width="300"><br>
 
-![cleveland equation](img/cleveland-equation.png)
+- We would also like to recognize our input box as a design acheivement. While it makes it clear that the user must input an integer, this design makes it possible for the user to increase or decrease their response by a value of 1 much easier than if they had to type/delete/type/delete etc. <br>
+<img src="img/inputbar.PNG" width="300"><br>
 
-You’ll be implementing this error score as part of the lab. 
-(Hint: it’s not a trick question, this is just to familiarize you with the experiment protocol). 
-With this Cleveland-McGill error score you can better compare the performance of the charts you test to figure out which one performs the best.
+- Also, the thank you page is a design acheivement that indicates the end of the trial, giving the user closure that the survey is complete. Once finished, they click close and it takes them straight to a Google search bar! <br>
 
-As a baseline, compare your average Error scores to the following chart, which include both Cleveland and McGill’s results as well as more recent extensions of this experiment (lower error indicates better performance, and error bars are bootstrapped 95% confidence intervals (`http://en.wikipedia.org/wiki/Confidence_interval#Meaning_and_interpretation`)):
-
-![cleveland results](img/cleveland-results.png)
-
-GitHub Details
----
-
-- Fork the GitHub Repository. You now have a copy associated with your username.
-- Make changes to index.html to fulfill the project requirements. 
-- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- Edit this README.md with a link to your gh-pages site: e.g. http://YourUsernameGoesHere.github.io/Experiment/index.html
-- Replace this file (README.md) with your writeup and Design/Technical achievements.
-- To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
-- Name your submission using the following scheme: 
-```
-a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
-```
+- As a team we attempted a second design achievement for this project, how would using a dark gradient background change how the charts are interpreted? While we did not have enough time to collect sufficient data to test this achievement, the code is included in docs/pt3.<br>
+<img src="img/design-attempt.PNG" width="300"><br>
