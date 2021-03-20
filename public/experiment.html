@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Study</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script>
+		// storage
+		const result = {};
+		currentDatasetIndex = 0;
+		startTime = 0;
+		experimentID = null;
+		datasets = []
+
+		window.addEventListener('load', async function() {
+      //1. fetch experiment data set
+			const { experiment } = await fetch('/api/v1/experiment', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					datasetsCount: 100,
+					datapointsCount: 7
+				})
+			}).then(resp => resp.json());
+			console.log(experiment);
+			experimentID = experiment._id;
+			datasets = experiment.datasets;
+
+			document.getElementById('totalGraphs').textContent = datasets.length;
+
+			// runExperiment
+			runExperiment();
+
+			document.getElementById("difference").addEventListener("input", function() {
+				console.log(this.value);
+				// TODO enable submit button, display current value somewhere
+			});
+
+			const difference = document.getElementById('difference');
+			const num = document.getElementById('num');
+
+			difference.addEventListener('change', function() {
+				num.value = this.value;
+				difference.value = this.value;
+
+			});
+			num.addEventListener('change', function() {
+				num.value = this.value;
+				difference.value = this.value;
+			});
+		});
+
+		function runExperiment() {
+			// pop a graph off of array and display
+			if (datasets[currentDatasetIndex]) {
+				// start timer
+				startTime = performance.now();
+				displayGraph();
+			} else {
+				// upload result to server
+				fetch('/api/v1/experiment', {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						experimentID: experimentID,
+						result
+					})
+				}).then(resp => resp.json()).then(resp => {
+					// navigate to thanks page
+					console.log("experiment finished!");
+					console.log(resp);
+					location.href='thanks.html';
+				});
+			}
+		}
+
+		// submit button onclick
+		function submit() {
+			// check participant response
+			let pctDifferenceParticipant = parseInt(document.getElementById("difference").value);
+			console.log("pct difference: " + pctDifferenceParticipant);
+
+			// get response time
+			let responseTimeMS = performance.now() - startTime;
+			console.log("response time: " + responseTimeMS);
+
+			// add response to result
+			result[datasets[currentDatasetIndex]._id] = {
+				responseTimeMS,
+				pctDifferenceParticipant
+			}
+
+			// run next experiment
+			currentDatasetIndex++;
+			runExperiment();
+		}
+
+		function displayGraph() {
+			d3.selectAll("svg > *").remove();
+			document.getElementById('currentGraph').textContent = currentDatasetIndex + 1;
+			if (datasets[currentDatasetIndex].chartType == "bar") {
+				barChart(datasets[currentDatasetIndex].data);
+			} else if (datasets[currentDatasetIndex].chartType == "donut") {
+				donutChart(datasets[currentDatasetIndex].data);
+			} else if (datasets[currentDatasetIndex].chartType == "circular") {
+				circularChart(datasets[currentDatasetIndex].data);
+			} else if (datasets[currentDatasetIndex].chartType == "pie") {
+				pieChart(datasets[currentDatasetIndex].data);
+			} else if (datasets[currentDatasetIndex].chartType == "stackedBar") {
+				stackedBarChart(datasets[currentDatasetIndex].data);
+			}
+		}
+
+		function barChart(data) {
+
+			const svg = d3.select("svg")
+
+			const margin = 180,
+				  width = svg.attr("width") - margin,
+				  height = svg.attr("height") - margin
+
+			const xScale = d3.scaleBand().range([0, width]).padding(0.4),
+				yScale = d3.scaleLinear().range([height, 0]);
+
+			const g = svg.append("g")
+				.attr("transform", "translate(" + 100 + "," + 100 + ")");
+
+				xScale.domain(data.map(d => d._id));
+				yScale.domain([0, d3.max(data, d => d.value)]);
+
+		    g.selectAll("bar")
+			    .data(data)
+			    .enter().append("rect")
+			    .attr("class", "bar")
+			    .attr("x", d => xScale(d._id))
+			    .attr("y", d => yScale(d.value))
+			    .attr("width", xScale.bandwidth())
+			    .attr("height", d => height - yScale(d.value))
+			    .attr("fill", "white")
+			    .attr("stroke", "black")
+
+		    g.selectAll("marker")
+			    .data(data)
+			    .enter()
+			    .append("text")
+			    .attr("x", d => xScale(d._id) + xScale.bandwidth()/2)
+			    .attr("y", d => (height + yScale(d.value))/2)
+			    .text(d => {
+				    if (d.isMarked) {
+					    return "*";
+				    } else {
+					    return "";
+				    }})
+			    .style("font-size", "20px")
+			    .attr("alignment-baseline", "middle");
+		}
+
+		function donutChart(data) {
+
+			const margin = 40;
+			const svg = d3.select("svg"),
+					width = svg.attr("width"),
+					height = svg.attr("height"),
+					radius = Math.min(width, height) / 2 - margin,
+					g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+			const label = d3.arc()
+					.outerRadius(radius)
+					.innerRadius(radius - 80);
+
+			const pie = d3.pie().value(d => d.value);
+
+			const arc = d3.arc()
+					.innerRadius(100)
+					.outerRadius(radius);
+
+			const arcs = g.selectAll("arc")
+					.data(pie(data))
+					.enter()
+					.append("g")
+					.attr("class", "arc")
+
+			arcs.append("path")
+				.attr("fill", "white")
+				.attr("stroke", "black")
+				.attr("d", arc);
+
+			arcs.append("text")
+				.attr("transform", d => "translate(" + label.centroid(d) + ")")
+				.text(d => {
+					if (d.data.isMarked) {
+							return "*";
+					} else {
+							return "";
+					} })
+				.style("font-size", "20px")
+				.attr("alignment-baseline", "middle");
+		}
+
+		function circularChart(data) {
+
+			const margin = {top: 10, right: 10, bottom: 10, left: 10},
+	        width = 500 - margin.left - margin.right,
+	        height = 500 - margin.left - margin.right,
+	        innerRadius = 50,
+	        outerRadius = 3 * Math.min(width, height) ;
+
+			const svg = d3.select("svg")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.left + margin.right)
+				.append("g")
+				.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+			const x = d3.scaleBand()
+					.range([0, 2 * Math.PI])
+					.align(0)
+					.domain( data.map(d => d._id) );
+
+		    const y = d3.scaleRadial()
+					.range([innerRadius, outerRadius])
+					.domain([0, 5000]);
+
+		    svg.append("g")
+				.selectAll("path")
+			  	.data(data)
+			  	.enter()
+			  	.append("path")
+			  	.attr("fill", "white")
+			  	.attr("stroke", "black")
+			  	.attr("d", d3.arc()
+				  	.innerRadius(innerRadius)
+				  	.outerRadius(d => y(d.value))
+				  	.startAngle(d => x(d._id))
+				  	.endAngle(d => x(d._id) + x.bandwidth())
+				  	.padAngle(0.01)
+				  	.padRadius(innerRadius));
+
+			svg.append("g")
+				.selectAll("g")
+				.data(data)
+			    .enter()
+			    .append("g")
+			  	.attr("text-anchor", d => (x(d._id) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start")
+			  	.attr("transform", d => "rotate(" + ((x(d._id) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(d.value) + innerRadius - 10) / 2 + ",0)")
+			  	.append("text")
+			  	.text(d => {
+				  	if (d.isMarked) {
+					  	return "*";
+				  	} else {
+					  	return "";
+				  	}})
+			  	.attr("transform", d => (x(d._id) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)")
+			  	.style("font-size", "20px")
+			  	.attr("alignment-baseline", "middle");
+		}
+
+		function pieChart(data) {
+			const margin = 40;
+			const svg = d3.select("svg"),
+					width = svg.attr("width"),
+					height = svg.attr("height"),
+					radius = Math.min(width, height) / 2 - margin,
+					g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+			const label = d3.arc()
+					.outerRadius(radius)
+					.innerRadius(radius - 80);
+
+			const pie = d3.pie().value(d => d.value);
+
+			const arc = d3.arc()
+					.innerRadius(0)
+					.outerRadius(radius);
+
+			const arcs = g.selectAll("arc")
+					.data(pie(data))
+					.enter()
+					.append("g")
+					.attr("class", "arc")
+
+			arcs.append("path")
+					.attr("fill", "white")
+					.attr("stroke", "black")
+					.attr("d", arc);
+
+			arcs.append("text")
+					.attr("transform", d => "translate(" + label.centroid(d) + ")")
+					.text(d => {
+							if (d.data.isMarked) {
+									return "*";
+							} else {
+									return "";
+							} })
+					.style("font-size", "20px")
+					.attr("alignment-baseline", "middle");
+		}
+
+		function stackedBarChart (data) {
+
+			function groupData(data) {
+				let cumulative = 0
+				const _data = data.map(d => {
+					cumulative += d.value
+					return {
+						value: d.value,
+						cumulative: cumulative - d.value,
+						isMarked: d.isMarked
+					}
+				});
+				return _data
+			}
+
+			const margin = {top: 10, right: 10, bottom: 10, left: 10},
+					width = 500,
+					height = 500,
+					barHeight = 100;
+
+			const w = width - margin.left - margin.right
+			const h = height - margin.top - margin.bottom
+			const halfBarHeight = barHeight / 2
+
+			const total = d3.sum(data, d => d.value)
+			const _data = groupData(data)
+
+			const xScale = d3.scaleLinear()
+					.domain([0, total])
+					.range([0, w])
+
+			const svg = d3.select('svg')
+					.attr('width', width)
+					.attr('height', height)
+					.append('g')
+					.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+
+			svg.selectAll('rect')
+					.data(_data)
+					.enter().append('rect')
+					.attr('class', 'rect-stacked')
+					.attr('x', d => xScale(d.cumulative))
+					.attr('y', h / 2 - halfBarHeight)
+					.attr('height', barHeight)
+					.attr('width', d => xScale(d.value))
+					.attr('fill', 'white')
+					.attr('stroke', 'black')
+
+			svg.selectAll('marker')
+					.data(_data)
+					.enter().append('text')
+					.attr('class', 'text-value')
+					.attr('text-anchor', 'middle')
+					.attr('x', d => xScale(d.cumulative) + (xScale(d.value) / 2))
+					.attr('y', (h / 2) + 5)
+					.text(d => {
+						if (d.isMarked) {
+							return "*";
+						} else {
+							return "";
+						}
+					})
+					.style("font-size", "20px")
+					.attr("alignment-baseline", "middle");
+		}
+
+
+	</script>
+</head>
+<body>
+	<section class="landing-container" id="landing">
+		<div class="landing-nav">
+			<div class="company"><img src="graphsGalore.png">Graphs Galore</div>
+
+		</div>
+		<div class="landing-sides">
+			<div class="item landing-jumbo">
+				<div class="title-exp">What do you see?</div>
+				<div class="subtitle">In this experiment, we ask you to judge what the percent of a smaller value to a larger value in a chart is.</div>
+			</div>
+			<div class="landing-cover">
+				<div class="index"><span id='currentGraph'>1</span> / <span id="totalGraphs">100</span></div>
+				<svg width="500" height="500"></svg>
+			</div>
+		</div>
+		<div class="landing-nav landing-bottom-nav">
+			<div class="company">Guess a value</div>
+			<div class="slider-view">
+				<span>0</span>
+				<input type="range" id="difference" name="difference" min="0" max="100"></input>
+				<span>100</span>
+				<input type="number" name="num" id="num" min="0" max="100" value="50" style="margin-left: 1em;">
+			</div>
+			<button id="submit" onclick="submit()">Submit</button>
+		</div>
+	</section>
+</body>
+</html>
