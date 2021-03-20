@@ -32,7 +32,9 @@ Experiment Results
   * Does the use of animation improve the user performance while interpreting data?
 
 ### Ranking the Charts
-![line chart](img/line.png)
+![line chart](img/summary_ranking.png)
+
+
 From our dataset, we were able to observe something rather interesting, the average error (|judged percent - true percent|) was lower on the bar condition than the bar with animation condition. However, when we calculated the log base 2 of the error using the formula that Cleveland and McGill used in their original experiment to measure accuracy. The bar with Animation had a higher accuracy than the bar condition. This was an interesting finding that could indicate how accuracy is sensitive to readings that are closer to 0. 
 
 Finally, we analyzed the charts using bootstrapped 96\% confidence intervals, and the chart from the analysis is below:
