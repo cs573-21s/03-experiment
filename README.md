@@ -1,96 +1,42 @@
 Assignment 3 - Replicating a Classic Experiment  
 ===
 
-For the scope of this project, assume the role of a scientist who runs experiments for a living.
-
-Q: How do we know that bar charts are "better" than pie charts?  
-A: Controlled experiments!
-
-In this assignment you'll implement a simple controlled experiment using some of the visualizations you’ve been building in this class. 
-You'll need to develop support code for the experiment sequence, results file output, and other experiment components. 
-(These are all simple with Javascript buttons and forms.)
-The main goals for you are to a) test three competing visualizations, b) implement data generation and error calculation functions inspired by Cleveland and McGill's 1984 paper, c) run the experiment with 10 participants (or a trial equivalent), and d) do some basic analysis and reporting of the results.
-
-For this assignment you should aim to write everything from scratch. For experimentation it is often necessary to control all elements of the chart.
-You should definitely *reference* demo programs from books or the web, and if you do please provide a References section with links at the end of your Readme.
-
 Requirements
 ---
 
-- Look it over Cleveland and McGill's original experiment (see the section below) and [watch this video](experiment-example.mp4) to get a sense of the experiment structure and where your visualizations will go.
-- When viewing the example experiment video, note the following:
-    - Trials are in random order.  
-    - Each trial has a randomly generated set of 5-10 data points.  
-    - Two of these data points are marked.  
-    - (Note: the experiment UI and User Experience could be better. Plenty of design achievements here).
-- Implement the data generation code **as described in the Cleveland & McGill paper**. 
-    - The goal is to generate a set of random datapoints (usually 5 or 10, with values be between 0 and 100) and to mark two of them for comparison in the trial. 
-- Add 3 visualizations (i.e. conditions) to your experiment. When you are adding these visualizations, think about *why* these visualizations are interesting to test. In other words, keep in mind a *testable hypothesis* for each of the added visualization. Some good options include bar charts, pie charts, stacked-bar charts, and treemaps. You can also rotate your bar chart to be horizontal or upside-down as one of your conditions. You are encouraged to test unorthodox charts -- radar charts come to mind, but there are MANY possibilities here-- feel free to be creative!
-    - Follow the style from Cleveland and McGill closely (e.g. no color, simple lines) unless you are specifically testing a hypothesis (e.g. color versus no color). Pay attention to spacing between elements like bars. Do not mark bars for comparison using color-- this makes the perceptual task too easy.
-- After each trial, implement code that grades and stores participant’s responses.
-- At the end of the experiment, to get the data, one easy option use Javascript to show the data from the current experiment\* (i.e. a comma separated list in a text box) and copy it into your master datafile. See the Background section below for an example of what this file should look like. (\*Alternately implement a server, if you're experienced with that sort of thing.)
+In this replication(-esque) exploration what we conducted around the **Cleveland & McGill paper** we decided to explore replicating the same experiment using **bar charts, bar charts with animation, line charts, line charts with animation, pie charts and pie charts with animation**. First we wanted to see if the introduction of animation would make a difference in the ability of the user to interpret the data. Does it enhance the users ability **No it doesn't**; we will talk about this when we go over the results of this experiment.
 
-- Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
-- Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
-- Run your experiment with 10 or more participants, or-- make sure you get at least 200 trials **per visualization type** in total.  
-    - Grab friends or people in the class.   
-    - Run at least 20 trials per visualization type, per participant. This is to ensure that you cover the range of possible answers (e.g. 5%, 10%, ..., 95%)
-- Make sure to save the resulting CSV after each participant. Compile the results into a master csv file (all participants, all trials).
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Include example images of each visualization as they appeared in your experiment (i.e. if you used a pie chart show the actual pie chart you used in the experiment along with the markings, not an example from Google Images).
+- Why did we use the different types of visualizations:
+    - We used the bar and pie chart in order to stay true to the orignal experiments
+    - We wanted to see if line-chart would be able to out perform barcharts as the line between the dots provides a visual element that might help the user interpret the data more effectively
+    - We wanted to animate the charts as we wanted to see if the use of animation has an effect on the user performance
 
-## General Requirements
+- Here are the Hypothesis we wanted to test:
+    - Does line chart facilitate the interpretation of data more effectively than bar and pie charts?
+    - Does the use of animation improve the user performance while interpreting data?
 
-0. Your code should be forked from the GitHub repo and linked using GitHub pages.
-2. Your project should use d3 to build visualizations. 
-3. Your writeup (readme.md in the repo) should contain the following:
+We had 34 participants who analyzed 24 charts in total. Each user was asked to analyze 6 types of charts with 4 charts of each type. The charts were generated in random order to avoid any selection effects and the values in the chart were also randomly generated. We did worry about the introduction of repeated measure bias due to the nature of this survey. Unfortunately the exploration of the introduction of repeated measure bias was outside the scope of this work. Hence we decided to rely on the likelihood of the repeated measure bias getting mitigated by the randomization.
 
-- Working link to the experiment hosted on gh-pages or some other site.
-- Concise description and screenshot of your experiment.
-- Description of the technical achievements you attempted with this project.
-- Description of the design achievements you attempted with this project.
+The summary table below shows the summative information of the 6 charts. As you can observe the Barchart with animation was the best performer and the piechart with animation was the worst. We used python for this portion of the analysis as we were more comfortable with preprocessing the data using Python.
+![Summary table](img/summary_ranking.png)
 
-Background
----
+You can see the three charts we showed the users below:
+![Line Chart](img/line.png)
+![Pie Chart](img/Pie.png)
+![Bar Chart](img/Bar.png)
+**For the animation condition we start all the charts at 50% and animate it to the generated values. For Pie chart we divide all the sections(arcs) equally.**
 
-In 1984, William Cleveland and Robert McGill published the results of several controlled experiments that pitted bar charts against pies and stacked-bar variants. 
-Their paper (http://www.cs.ubc.ca/~tmm/courses/cpsc533c-04-spr/readings/cleveland.pdf) (http://info.slis.indiana.edu/~katy/S637-S11/cleveland84.pdf) is considered a seminal paper in data visualization.
-In particular, they ran a psychology-style experiment where users were shown a series of randomly-generated charts with two graphical elements marked like this:
+Finally we analyzed the charts using bootstrapped 96\% confidence intervals and the chart from the analysis is provided below:
+![Aalysis](img/confidenceintervals.png)
+Analyzing the chart we can see that for the line and bar chart the performance of the users' increased with the animate condition but it regressed further in the pie chart condition. So it does can enhance performance for charts where the users already perform at a higher level. Analyzing line vs. line with animation is indicative of improving performance but the difference is not significant. In the contenxt of this experiment, the static line chart in is not a good alternative to bar charts however if we must utilize line charts for some reason then animating them will make the performance of users using bar, bar with animation and line with animation comparable. The chart also indicates that although there isn't significant difference between line, pie and pie with animation, using animation makes line chart significantly better than pie charts and pie chart with animations.
 
-![cleveland bar chart](img/cleveland-bar.png)
+We deployed our experiment online and it can be accessed through the following link.
+[Link to the experiment](https://internal.assistments.org/LiveChart/experimentindex)
 
-Participants were then asked, "What percentage is the smaller of the larger?". 
-This was repeated hundreds of time with varying data and charts. 
-By the end of the study, Cleveland and McGill had amassed a large dataset that looked like this:
+Design achievements:
+===
+Inorder to explore the effectiveness of using cleaner chart design while remaining within the parameters of the orignal study we tweaked aspects of the charts. We introduced different shades of greys and black to highlight the bars. We were hoping that the users would have an easier time working with the new color scheme of the charts. We also introduced Animation inorder to enhance the user experience and see how the animation element influences the users interpretation of the data.
 
-![cleveland table](img/cleveland-table.png)
-
-__Log-base-2 or "cm-error"__: The true percent is the actual percentage of the smaller to the larger, while the reported percent is what participants reported. 
-Cleveland and McGill recognized that their analyses would be biased if they took `abs(ReportedPercent – TruePercent)` as their score for error. 
-To compensate, they came up with a logarithmic scale for error with this equation:
-
-![cleveland equation](img/cleveland-equation.png)
-
-You’ll be implementing this error score as part of the lab. 
-(Hint: it’s not a trick question, this is just to familiarize you with the experiment protocol). 
-With this Cleveland-McGill error score you can better compare the performance of the charts you test to figure out which one performs the best.
-
-As a baseline, compare your average Error scores to the following chart, which include both Cleveland and McGill’s results as well as more recent extensions of this experiment (lower error indicates better performance, and error bars are bootstrapped 95% confidence intervals (`http://en.wikipedia.org/wiki/Confidence_interval#Meaning_and_interpretation`)):
-
-![cleveland results](img/cleveland-results.png)
-
-GitHub Details
----
-
-- Fork the GitHub Repository. You now have a copy associated with your username.
-- Make changes to index.html to fulfill the project requirements. 
-- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- Edit this README.md with a link to your gh-pages site: e.g. http://YourUsernameGoesHere.github.io/Experiment/index.html
-- Replace this file (README.md) with your writeup and Design/Technical achievements.
-- To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
-- Name your submission using the following scheme: 
-```
-a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
-```
+Technical achievements:
+===
+We setup the experiment to work on a full stack project. Our data is stored in a Postgres database and we setup a RESTful api to handle the data request in Spring and the web pages are hosted using jsp pages.  
