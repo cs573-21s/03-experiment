@@ -48,7 +48,7 @@ The values not involved in the users' judgments are randomly generated from 20 t
 Analysis
 ---
 
-### Error Trial 1
+### Error for Trial 1
 In our experiment we were asked to find how different charts could be interpreted by different users. As we have learned in our classroom experience, pie charts are not great tools for representing data. Much to our surprise, we found that the log error was negative for the pie chart. This meant that many of the users input values that were very close to the true percentage. While pie charts had the greatest distribution of error, it was still the most well-interpreted chart compared to bar and stacked.<br>
 
 <img src="img/logerr.png" width="500"><br>
@@ -58,41 +58,40 @@ In our experiment we were asked to find how different charts could be interprete
 - The bar chart had the smallest range of error, as expected, however the average error was a bit over 2, while pie charts were found to be most successful with average error under 2. <br>
 Because of the questionable data we found in this trial, we decided to pursue a second trial to compare.
 
-### Error Trial 2
-In our second trial
+### Error for Trial 2
+In our second trial we still found that pie charts performed a lot better than anticipated. However, the average error for the bar chart was smaller than the average for the pie chart, which differed from our first experiment and more closely matched the results of the Cleveland paper. <br>
 
 <img src="chartsSecondTrial.png" width="500">
 
+- Most users still had a very difficult time reading stacked bar charts with most error values between 2.8 and 3. This was a tighter distribution of erro compared to the first trial, however the error was more severe.<br>
+- The pie chart error still had the greatest range of error, stretching from about 2 to 2.4. The error found in this trial were also much higher than those reported in our first attempt. <br>
+- This time, the bar chart did not have the smallest range of error, however the average error was the lowest of all of the charts and the range spanned from (~2.08 - ~2.3). We also noticed that it was interesting how the entire range of bar chart error fit into the range of error for pie charts. <br>
+Although our findings for this trial were still a bit unexpected with successful pie charts, our results from our second trial were much better than those from the first.
+
 ### Radial Analysis
+Our extra part for this experiment consisted of a smaller trial of just radial graphs: those with 3 bars, 5 bars, 7 bars. We hypothesized that it would be easier for the user to read a chart with more bars because they would be easier to reference in comparison to each other. However, the data suggests that there is no clear correlation between the number of bars and the accuracy of the reading.<br>
 
 <img src="img/logerr-extraPart.png" width="500">
 
+- At first glance, seeing that the radial 7-bar graph had the least average error, it appeared that our hypothesis was correct. However, the second "most successful" chart was the 3-bar chart. The least successful of all was actually the medium, the 5-bar chart.<br>
+- The 7-bar chart had the greatest range of error from ~2.36 - ~2.71, while the 3-bar chart had the smallest range of error (~2.42 - ~2.74), followed closely by the 5-bar chart from ~2.46 - ~2.8. <br>
+- Overall, while we can draw conclusions from our results, the differences between these chart types are not significantly different.<br>
+- Perhaps if we had more time, we would collect more data from more users to more accurately narrow down these results and report any differences in the findings.<br>
+
 ### Overall 
-
+Based on our data from two trials, we did not find that pie charts were the hardest graph to read. Ultimately, it appears to us that to accurately read the values from a chart depends may simply depend on the users cognitive ability. While our data suggests pie and bar charts over radial and stacked, we may find different results if we attempted a third trial with new users. Overall, bar charts had the lowest average error, but the pie chart performed much better compared to the results of the Cleveland experiment.
 <img src="img/charts-secondtrial-extrapart-combined.png" width="500">
-
-## Normal Distribution
-
-<img src="img/normal_dist_reported_percent.png" width="500"><br>
-<img src="img/normal_dist_true_percent.png" width="500"><br>
-<img src="img/normdist-extra-reported-answers.png" width="500"><br>
-<img src="img/normdist-extra-true.png" width="500"><br>
 
 Achevements
 ---
 
-## Technical Achievenment
+### Technical Achievenment
 - After recreating the classical experiment, we decided to pursue a third part involving radial charts. This type of graph is was not included in the classical experiment but is becoming an increasingly more popular way to represent data. We created 3 types of this chart, 3 bars, 5 bars, 7 bars, and wanted to determine if the number of bars influenced how accurate the reported percent was. This was an interesting component because creating a radial graph with d3 was a lot more complicated than anticipated causing multiple bugs before it came together.<br>
 |TYPE8|<img src="img/TYPE8.png" width="200">|TYPE9|<img src="img/TYPE9.png" width="200">|TYPE10|<img src="img/TYPE10.png" width="200">|
 
-## Design Achievement
+### Design Achievement
 - On the web page, if the user accidentally clicks the Next button without entering a value, their page will send out an alert box to remind the user to enter the answer and null data can be avoided to send to server. In addition, at the top of the page, users can see which page they are currently on and a progress bar, allowing users to know their progress.<br>
-<img src="img/alert.png" width="300"><br><img src="img/progressbar.png" width="300"><br>
+<img src="img/alert.png" width="300"><br><img src="img/progressbar.png" width="300">
 
 - As a team we attempted a second design achievement for this project, how would using a dark gradient background change how the charts are interpreted? While we did not have enough time to collect sufficient data to test this achievement, the code is included in docs/pt3.<br>
 <img src="img/design-attempt.PNG" width="300"><br>
-
-
-
-
-
