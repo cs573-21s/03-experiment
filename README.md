@@ -5,7 +5,7 @@ The three vizualizations I used in this experiment were the circular bar plot (t
 
 ![error.png](https://github.com/wtt102/03-experiment/blob/main/screenshots/intro.png)
 ---
-![error.png](https://github.com/wtt102/03-experiment/blob/main/circular.png)
+![error.png](https://github.com/wtt102/03-experiment/blob/main/screenshots/circular.png)
 ---
 ![error.png](https://github.com/wtt102/03-experiment/blob/main/screenshots/heatmap.png)
 ---
